@@ -11,6 +11,7 @@ body {
     clear: both;
     content: "";
     display: table;
+    
   }
   
   .status {
@@ -24,13 +25,13 @@ body {
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
-    height: 50px;
+    height: 100px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 50px;
-    color: #000;
+    width: 100px;
+    color: black;
   }
   
   .square:focus {
@@ -52,4 +53,6 @@ body {
   .game-info {
     margin-left: 20px;
   }
-  
+  .grid{
+      margin: 20%;
+  }

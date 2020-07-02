@@ -12,9 +12,11 @@ class Square extends React.Component {
     
     render() {
       return (
+        
         <button className="square" onClick={()=>this.props.onClick()} >
           {this.props.value}
         </button>
+       
         //onclick calls onclick in rendersquare
       );
     }
@@ -42,7 +44,7 @@ class Square extends React.Component {
         //        squares: squares,
         //        player : !this.state.player,
         //     });
-          
+
         //human vs human
          object=nexthuman(squares,this.state.player,i);
          console.log(object)
@@ -67,10 +69,14 @@ class Square extends React.Component {
     render() {
         const winner = checkwinner(this.state.squares);    
         let status;    
-        if (winner) {      status = 'Winner: ' + winner;    } 
-        else {      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');    }  
+        if (winner) {     
+             status = 'Winner: ' + winner; 
+               } 
+        else { 
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');   
+         }  
       return (
-        <div>
+        <div >
           <div className="status">{status}</div>
           <div className="board-row">
             {this.renderSquare(0)}
