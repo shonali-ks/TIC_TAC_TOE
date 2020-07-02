@@ -8,6 +8,7 @@ var object={
     player:true
 
 }
+var count=0; 
 class Square extends React.Component {
     
     render() {
@@ -67,11 +68,18 @@ class Square extends React.Component {
     }
   
     render() {
-        const winner = checkwinner(this.state.squares);    
+        const winner = checkwinner(this.state.squares); 
+          count++;
+          //console.log(count);
         let status;    
-        if (winner) {     
+         if(winner)
+            {     
              status = 'Winner: ' + winner; 
                } 
+        else if(count==10)
+        {
+            status = 'It\'s a tie!';
+        }
         else { 
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');   
          }  
