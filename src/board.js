@@ -76,12 +76,12 @@ class Square extends React.Component {
             {     
              status = 'Winner: ' + winner; 
                } 
-        else if(count==10)
-        {
-            status = 'It\'s a tie!';
-        }
+        
         else { 
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');   
+            if(count == 10)
+            status = 'It\'s a tie';
+            else 
+            status = 'Next player: ' + (this.state.player ? 'X' : 'O');   
          }  
       return (
         <div >
