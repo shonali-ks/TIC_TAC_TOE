@@ -14,19 +14,19 @@ var object={
 
 var isAi=true;
 var count=0; 
-class Check extends React.Component {
+// class Check extends React.Component {
     
-    render() {
-      return (
-        <div>
-            <button className="checkAi" onClick={()=> (isAi=true)}>Ai</button>
-            <button className="checkAi" onClick={()=> (isAi=false)}>Human</button>
-        </div>
+//     render() {
+//       return (
+//         <div>
+//             <button className="checkAi" onClick={()=> (location.reload(),isAi=true)}>Ai</button>
+//             <button className="checkAi" onClick={()=> (location.reload(),isAi=false)}>Human</button>
+//         </div>
         
        
-      );
-    }
-  }
+//       );
+//     }
+//   }
 
 class Square extends React.Component {
     
@@ -82,6 +82,7 @@ class Square extends React.Component {
                 {
                 // console.log("in ai");
                   //console.log(this.state.squares);
+                  
                     let j=findBestMove(this.state.squares,'O');
                     squares[j] = 'O';  
                   //console.log(squares);
@@ -92,6 +93,9 @@ class Square extends React.Component {
                       player : !this.state.player,
                     });
                     object.computer=!object.computer;
+                    const squares1 = this.state.squares.slice();
+                    if (checkwinner(squares1) || squares1[j])
+                      return;
 
                 }
               }  
@@ -113,7 +117,7 @@ class Square extends React.Component {
     render() {
         const winner = checkwinner(this.state.squares); 
           count++;
-          //console.log(count);
+          console.log(count);
         let status;    
          if(winner)
             {     
@@ -121,13 +125,18 @@ class Square extends React.Component {
                } 
         
         else { 
-            if(count == 10)
+            if(count >= 10)
             status = 'It\'s a tie';
-            else 
-            status = 'Next player: ' + (this.state.player ? 'X' : 'O');   
+            else if(!isAi)
+            status = 'Next player: ' + (this.state.player ? 'X' : 'O');  
+            else  status = 'Next player: ' + (this.state.player ? 'Human' : 'Ai');
          }  
       return (
         <div >
+          <div>
+            <button className="checkAi" onClick={()=> (isAi=true,this.state)}>Ai</button>
+            <button className="checkAi" onClick={()=> (isAi=false,this.state)}>Human</button>
+        </div>
           <div className="status">{status}</div>
           <div className="board-row">
             {this.renderSquare(0)}
