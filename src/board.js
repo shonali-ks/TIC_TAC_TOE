@@ -145,12 +145,12 @@ class Square extends React.Component {
             {
               isAi=true;
               if(count>=1)
-              this.setState({checkHuman:true})}}>Ai</button>
+              this.setState({checkHuman:true})}}>vs Ai</button>
             <button disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
             {
               isAi=false;
               if(count>=1)
-              this.setState({checkAi:true})}}>Human</button>
+              this.setState({checkAi:true})}}>vs Human</button>
             <button className="reset" onClick={()=>window.location.reload()}>Reset</button>
         </div>
           <div className="status">{status}</div>
