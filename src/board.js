@@ -2,13 +2,32 @@
 import React, { Component } from 'react';
 import nexthuman from './humanvshuman';
 import checkwinner from './winner';
+import findBestMove from './ai';
+import './board.css'
 var object={
     icon : 'X',
     squares:null,
-    player:true
+    player:true,
+    computer:false,
 
 }
+
+var isAi=true;
 var count=0; 
+class Check extends React.Component {
+    
+    render() {
+      return (
+        <div>
+            <button className="checkAi" onClick={()=> (isAi=true)}>Ai</button>
+            <button className="checkAi" onClick={()=> (isAi=false)}>Human</button>
+        </div>
+        
+       
+      );
+    }
+  }
+
 class Square extends React.Component {
     
     render() {
@@ -47,17 +66,41 @@ class Square extends React.Component {
         //     });
 
         //human vs human
-         object=nexthuman(squares,this.state.player,i);
-         console.log(object)
-            squares[i] = object.icon;
-           console.log(squares);
-           
+        
+        
+         object=nexthuman(squares,this.state.player,i,isAi,object.computer);
+         
+            //squares[i] = 'X';
+           console.log(object.squares);
+           const square=object.squares;
 
            this.setState({
-               squares: object.squares,
+               squares: square,
                player : object.player,
-            });  
-            console.log(this.state.player);
+            },()=>{
+            if(object.computer)
+                {
+                // console.log("in ai");
+                  //console.log(this.state.squares);
+                    let j=findBestMove(this.state.squares,'O');
+                    squares[j] = 'O';  
+                  //console.log(squares);
+                  //console.log(this.state.player);
+
+                  this.setState({
+                      squares: squares,
+                      player : !this.state.player,
+                    });
+                    object.computer=!object.computer;
+
+                }
+              }  
+            );  
+            //console.log(this.state.player);
+            
+           // console.log(object.computer)
+        
+        
            
         }
 
@@ -111,6 +154,7 @@ class Square extends React.Component {
       return (
         <div className="game">
           <div className="game-board">
+              {/* <Check/> */}
             <Board />
           </div>
           <div className="game-info">

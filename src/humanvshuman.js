@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import Board from './board';
 
-function nexthuman(squares,player,i){
+function nexthuman(square,player,i,isAi,computer){
 
-    squares[i]=player? 'X':'O';  
-    squares=squares;
-    player=!player;
+    square[i]=player? 'X':'O';  
+    
+    console.log(square);
+    if(!isAi)
+    {player=!player;computer=false;}
+    else
+    {
+        computer=!computer;
+        player=!player;
+    }
 
-    return { icon:squares[i], squares:squares ,player:player};
+    return { "icon":square[i], "squares":square ,"player":player,"computer":computer};
+    
+    
     
 
 }
