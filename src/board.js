@@ -48,6 +48,8 @@ class Square extends React.Component {
         this.state = {
           squares: Array(9).fill(null),
           player: true,
+          checkAi : false,
+          checkHuman:false,
         };
       }
     //saving states in square
@@ -77,6 +79,7 @@ class Square extends React.Component {
            this.setState({
                squares: square,
                player : object.player,
+               
             },()=>{
             if(object.computer)
                 {
@@ -121,7 +124,11 @@ class Square extends React.Component {
         let status;    
          if(winner)
             {     
+              if(!isAi)
              status = 'Winner: ' + winner; 
+             else if(winner==='O')
+             status = 'Winner: ' + 'Ai';
+             else  status = 'Winner: ' + 'human';
                } 
         
         else { 
@@ -134,8 +141,17 @@ class Square extends React.Component {
       return (
         <div >
           <div>
-            <button className="checkAi" onClick={()=> (isAi=true,this.state)}>Ai</button>
-            <button className="checkAi" onClick={()=> (isAi=false,this.state)}>Human</button>
+            <button disabled={this.state.checkAi} className="checkAi" onClick={()=> 
+            {
+              isAi=true;
+              if(count>=1)
+              this.setState({checkHuman:true})}}>Ai</button>
+            <button disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
+            {
+              isAi=false;
+              if(count>=1)
+              this.setState({checkAi:true})}}>Human</button>
+            <button className="reset" onClick={()=>window.location.reload()}>Reset</button>
         </div>
           <div className="status">{status}</div>
           <div className="board-row">
