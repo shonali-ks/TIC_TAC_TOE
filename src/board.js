@@ -130,6 +130,14 @@ class Square extends React.Component {
               if(count>=1)
               this.setState({checkAi:true})}}>vs Human</button>
             <button className="reset" onClick={()=>window.location.reload()}>Reset</button>
+            {/* hints playing against AI */}
+            <button disabled={this.state.checkAi} className="suggestion" onClick={()=>{
+              let i=findBestMove(this.state.squares,'O',0);
+              let row=(i-(i%3))/3+1;
+              let col=(i%3)+1;
+              console.log(i);
+              alert(`Try row number ${row} and column number ${col} `);
+            }}>Hints</button>
         </div>
           <div className="status">{status}</div>
           <div className="board-row">

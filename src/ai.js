@@ -99,7 +99,12 @@ const minimax = (squares, depth, ai, isMax) => {
         const next= squares.slice();
         next[i]=ai;  
         // Compute evaluation function for this move. 
-        const moveVal = minimax(next, level, ai, false);
+        let boo;
+        if(ai==='X')
+         boo=true;
+        else boo = false;
+        console.log(boo);
+        const moveVal = minimax(next, level, ai, boo);
   
         // If the value of the current move is more than the best value, then update best
         if (moveVal > bestVal) {
