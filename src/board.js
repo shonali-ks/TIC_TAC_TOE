@@ -60,10 +60,15 @@ class Square extends React.Component {
                squares: square,
                player : object.player,
                
-            },()=>{
+            }
+            ,()=>{
               //AI vs human
+              const squares2 = this.state.squares.slice();
+                    if (checkwinner(squares2))
+                      return;
             if(object.computer)
                 {
+                  
                   let j=findBestMove(this.state.squares,'O',level);
                   squares[j] = 'O';  
                 
