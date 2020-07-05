@@ -12,14 +12,14 @@ const getEmptyCells = (squares) => {
   }
 const utility = (squares, ai) => {
     const lines = [
-      [0, 1, 2], // h.h0
-      [3, 4, 5], // h.h1 
-      [6, 7, 8], // h.h2
-      [0, 3, 6], // v.v0
-      [1, 4, 7], // v.v1
-      [2, 5, 8], // v.v2
-      [0, 4, 8], // d.d0
-      [2, 4, 6]  // d.d1
+      [0, 1, 2], 
+      [3, 4, 5], 
+      [6, 7, 8], 
+      [0, 3, 6], 
+      [1, 4, 7], 
+      [2, 5, 8], 
+      [0, 4, 8], 
+      [2, 4, 6]  
     ];
   
     for (let i = 0; i < lines.length; i++) {
@@ -97,13 +97,15 @@ const minimax = (squares, depth, ai, isMax) => {
       if (cell === null) {
         // Make a move
         const next= squares.slice();
-        next[i]=ai;  
-        // Compute evaluation function for this move. 
+        next[i]=ai; 
+
+         
         let boo;
         if(ai==='X')
          boo=true;
         else boo = false;
-        console.log(boo);
+
+        // Compute evaluation function for this move.
         const moveVal = minimax(next, level, ai, boo);
   
         // If the value of the current move is more than the best value, then update best

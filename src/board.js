@@ -4,6 +4,10 @@ import nexthuman from './humanvshuman';
 import checkwinner from './winner';
 import findBestMove from './ai';
 import './board.css'
+import soundfile from './sounds/humanFail.mp3'
+import soundfile1 from './sounds/humanPass.mp3'
+import soundfile2 from './sounds/multi.mp3'
+
 var object={
     icon : 'X',
     squares:null,
@@ -14,7 +18,8 @@ var object={
 //check if user selected AI
 var isAi=true;
 var count=0; 
-//check the level chosen
+
+//check the depth chosen
 var level=0;
 
 //Make squares
@@ -41,8 +46,10 @@ class Square extends React.Component {
           player: true,
           checkAi : false,
           checkHuman:false,
+         
         };
       }
+
     //saving states in square
       handleClick(i)
        {    
@@ -50,6 +57,7 @@ class Square extends React.Component {
            const squares = this.state.squares.slice();
            if (checkwinner(squares) || squares[i])
              return;
+
         //human vs human
          object=nexthuman(squares,this.state.player,i,isAi,object.computer);
          
@@ -62,6 +70,7 @@ class Square extends React.Component {
                
             }
             ,()=>{
+
               //AI vs human
               const squares2 = this.state.squares.slice();
                     if (checkwinner(squares2))
@@ -83,9 +92,28 @@ class Square extends React.Component {
 
                 }
               }  
-            );  
+            ); 
+            
         }
-//
+        //play music after winning or loosing
+        playAudio(winner) {
+          if(winner==='O')
+          {
+            const audioEl = document.getElementsByClassName("audio-element")[0];
+            audioEl.play();}
+            else{
+              const audioEl1 = document.getElementsByClassName("audio-element1")[0];
+            audioEl1.play();
+
+            }
+        } 
+        play() {
+          
+            const win = document.getElementsByClassName("audio-element2")[0];
+            win.play();}
+            
+        
+  //to render each square
     renderSquare(i) {
       return <Square 
       value={this.state.squares[i]} 
@@ -96,15 +124,14 @@ class Square extends React.Component {
       //declare winner
         const winner = checkwinner(this.state.squares); 
           count++;
-          console.log(count);
         let status;    
          if(winner)
             {     
               if(!isAi)
-             status = 'Winner: ' + winner; 
+             {status = 'Winner: ' + winner; this.play()}
              else if(winner==='O')
-             status = 'Winner: ' + 'Ai';
-             else  status = 'Winner: ' + 'human';
+             {status = 'Winner: ' + 'Ai';this.playAudio(winner);}
+             else  {status = 'Winner: ' + 'human';this.playAudio(winner);}
                } 
         
         else { 
@@ -114,30 +141,51 @@ class Square extends React.Component {
             status = 'Next player: ' + (this.state.player ? 'X' : 'O');  
             else  status = 'Next player: ' + (this.state.player ? 'Human' : 'Ai');
          }  
+
       return (
         <div >
+          <audio className="audio-element">
+          <source src={soundfile}></source>
+          <source src={soundfile1}></source>
+        </audio>
+        <audio className="audio-element1">
+          
+          <source src={soundfile1}></source>
+        </audio>
+        <audio className="audio-element2">
+          
+          <source src={soundfile2}></source>
+        </audio>
+        
           {/* Buttons to choose */}
           <div>
             
+            {/* to play againt AI */}
             <button disabled={this.state.checkAi} className="checkAi" onClick={()=> 
             {
               isAi=true;
               if(count>=1)
               this.setState({checkHuman:true})}}>vs Ai</button>
+
+              {/* to play human vs human */}
             <button disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
             {
               isAi=false;
               if(count>=1)
               this.setState({checkAi:true})}}>vs Human</button>
+
+              {/* reset button */}
             <button className="reset" onClick={()=>window.location.reload()}>Reset</button>
+
             {/* hints playing against AI */}
             <button disabled={this.state.checkAi} className="suggestion" onClick={()=>{
               let i=findBestMove(this.state.squares,'O',0);
               let row=(i-(i%3))/3+1;
               let col=(i%3)+1;
-              console.log(i);
               alert(`Try row number ${row} and column number ${col} `);
             }}>Hints</button>
+
+            {/* display the board */}
         </div>
           <div className="status">{status}</div>
           <div className="board-row">
@@ -159,6 +207,7 @@ class Square extends React.Component {
       );
     }
   }
+  
   
   export default  class Game extends React.Component {
     render() {
