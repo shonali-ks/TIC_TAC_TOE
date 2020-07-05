@@ -11,23 +11,13 @@ var object={
     computer:false,
 
 }
-
+//check if user selected AI
 var isAi=true;
 var count=0; 
-// class Check extends React.Component {
-    
-//     render() {
-//       return (
-//         <div>
-//             <button className="checkAi" onClick={()=> (location.reload(),isAi=true)}>Ai</button>
-//             <button className="checkAi" onClick={()=> (location.reload(),isAi=false)}>Human</button>
-//         </div>
-        
-       
-//       );
-//     }
-//   }
+//check the level chosen
+var level=0;
 
+//Make squares
 class Square extends React.Component {
     
     render() {
@@ -41,7 +31,8 @@ class Square extends React.Component {
       );
     }
   }
-  
+
+  //Make Board
   class Board extends React.Component {
     constructor(props) {
         super(props);
@@ -53,26 +44,15 @@ class Square extends React.Component {
         };
       }
     //saving states in square
-      handleClick(i) {    
+      handleClick(i)
+       {    
           //slice to copy the curernt state instead od modifying the exisiting array
            const squares = this.state.squares.slice();
            if (checkwinner(squares) || squares[i])
              return;
-        //    squares[i] = this.state.player? 'X':'O';  
-        //    console.log(squares);
-        //    console.log(this.state.player);
-
-        //    this.setState({
-        //        squares: squares,
-        //        player : !this.state.player,
-        //     });
-
         //human vs human
-        
-        
          object=nexthuman(squares,this.state.player,i,isAi,object.computer);
          
-            //squares[i] = 'X';
            console.log(object.squares);
            const square=object.squares;
 
@@ -81,16 +61,12 @@ class Square extends React.Component {
                player : object.player,
                
             },()=>{
+              //AI vs human
             if(object.computer)
                 {
-                // console.log("in ai");
-                  //console.log(this.state.squares);
-                  
-                    let j=findBestMove(this.state.squares,'O');
-                    squares[j] = 'O';  
-                  //console.log(squares);
-                  //console.log(this.state.player);
-
+                  let j=findBestMove(this.state.squares,'O',level);
+                  squares[j] = 'O';  
+                
                   this.setState({
                       squares: squares,
                       player : !this.state.player,
@@ -103,14 +79,8 @@ class Square extends React.Component {
                 }
               }  
             );  
-            //console.log(this.state.player);
-            
-           // console.log(object.computer)
-        
-        
-           
         }
-
+//
     renderSquare(i) {
       return <Square 
       value={this.state.squares[i]} 
@@ -118,6 +88,7 @@ class Square extends React.Component {
     }
   
     render() {
+      //declare winner
         const winner = checkwinner(this.state.squares); 
           count++;
           console.log(count);
@@ -140,7 +111,9 @@ class Square extends React.Component {
          }  
       return (
         <div >
+          {/* Buttons to choose */}
           <div>
+            
             <button disabled={this.state.checkAi} className="checkAi" onClick={()=> 
             {
               isAi=true;
@@ -179,12 +152,15 @@ class Square extends React.Component {
       return (
         <div className="game">
           <div className="game-board">
-              {/* <Check/> */}
             <Board />
           </div>
           <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
+            <h1>Depth </h1>
+            <p>If against Ai</p>
+          <button className="level" onClick={()=>level=10}>1</button>
+          <button className="level" onClick={()=>level=5}>2</button>
+          <button className="level" onClick={()=>level=3}>3</button>
+          <button className="level" onClick={()=>level=0}>Unlimited</button>
           </div>
         </div>
       );

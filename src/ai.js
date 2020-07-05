@@ -83,7 +83,7 @@ const minimax = (squares, depth, ai, isMax) => {
     return best;
   }
  
- const findBestMove = (squares, ai) => {
+ const findBestMove = (squares, ai,level) => {
     let bestVal = -1000;
     let bestMove = null;
   
@@ -99,7 +99,7 @@ const minimax = (squares, depth, ai, isMax) => {
         const next= squares.slice();
         next[i]=ai;  
         // Compute evaluation function for this move. 
-        const moveVal = minimax(next, 0, ai, false);
+        const moveVal = minimax(next, level, ai, false);
   
         // If the value of the current move is more than the best value, then update best
         if (moveVal > bestVal) {
