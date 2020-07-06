@@ -18,11 +18,8 @@ var object={
 var isAi=true;
 var count=0; 
 
-<<<<<<< HEAD
 //check the depth chosen
 var level=-1;
-=======
->>>>>>> 43a7be4e160acc9c945b37d0b5faba608626f069
 
 //Make squares
 class Square extends React.Component {
@@ -183,7 +180,6 @@ class Square extends React.Component {
               {/* reset button */}
             <button className="reset" onClick={()=>window.location.reload()}>Reset</button>
 
-<<<<<<< HEAD
             {/* hints playing against AI */}
             <button disabled={this.state.checkAi} className="suggestion" onClick={()=>{
               let i=findBestMove(this.state.squares,'O',-1);
@@ -193,8 +189,6 @@ class Square extends React.Component {
             }}>Hints</button>
 
             {/* UNDO */}
-=======
->>>>>>> 43a7be4e160acc9c945b37d0b5faba608626f069
             
 
             {/* display the board */}
@@ -229,7 +223,6 @@ class Square extends React.Component {
             <Board />
           </div>
           <div className="game-info">
-<<<<<<< HEAD
             <h1>Depth </h1>
             <p>If against Ai</p>
           <button className="level" onClick={()=>level=1}>1</button>
@@ -237,9 +230,7 @@ class Square extends React.Component {
           <button className="level" onClick={()=>level=3}>3</button>
           <button className="level" onClick={()=>level=4}>4</button>
           <button className="level" onClick={()=>level=-1}>Unlimited</button>
-=======
             
->>>>>>> 43a7be4e160acc9c945b37d0b5faba608626f069
           </div>
         </div>
       );
