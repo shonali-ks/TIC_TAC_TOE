@@ -5,7 +5,7 @@ function nexthuman(square,player,i,isAi,computer){
 
     square[i]=player? 'X':'O';  
     
-    console.log(square);
+    //console.log(square);
     if(!isAi)
     {player=!player;computer=false;}
     else

@@ -20,7 +20,7 @@ var isAi=true;
 var count=0; 
 
 //check the depth chosen
-var level=0;
+var level=-1;
 
 //Make squares
 class Square extends React.Component {
@@ -135,8 +135,12 @@ class Square extends React.Component {
                } 
         
         else { 
-            if(count >= 10)
+          console.log(count);
+          if(count >= 11 && isAi==true)
             status = 'It\'s a tie';
+            else if(count == 11 )
+            status = 'It\'s a tie';
+            
             else if(!isAi)
             status = 'Next player: ' + (this.state.player ? 'X' : 'O');  
             else  status = 'Next player: ' + (this.state.player ? 'Human' : 'Ai');
@@ -179,11 +183,14 @@ class Square extends React.Component {
 
             {/* hints playing against AI */}
             <button disabled={this.state.checkAi} className="suggestion" onClick={()=>{
-              let i=findBestMove(this.state.squares,'O',0);
+              let i=findBestMove(this.state.squares,'O',-1);
               let row=(i-(i%3))/3+1;
               let col=(i%3)+1;
               alert(`Try row number ${row} and column number ${col} `);
             }}>Hints</button>
+
+            {/* UNDO */}
+            
 
             {/* display the board */}
         </div>
@@ -219,10 +226,11 @@ class Square extends React.Component {
           <div className="game-info">
             <h1>Depth </h1>
             <p>If against Ai</p>
-          <button className="level" onClick={()=>level=10}>1</button>
-          <button className="level" onClick={()=>level=5}>2</button>
+          <button className="level" onClick={()=>level=1}>1</button>
+          <button className="level" onClick={()=>level=2}>2</button>
           <button className="level" onClick={()=>level=3}>3</button>
-          <button className="level" onClick={()=>level=0}>Unlimited</button>
+          <button className="level" onClick={()=>level=4}>4</button>
+          <button className="level" onClick={()=>level=-1}>Unlimited</button>
           </div>
         </div>
       );
