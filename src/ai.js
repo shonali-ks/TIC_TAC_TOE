@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+let max_depth;
 const getEmptyCells = (squares) => {
     return squares
       .map((val, idx) => [val, idx])
@@ -62,6 +63,7 @@ const minimax = (squares, depth, ai, isMax) => {
   
           // Call minimax recursively and choose the maximum value
           best = Math.max(best, minimax(next, depth + 1, ai, !isMax));
+          if(max_depth == depth) break;
         }
       }
     } else {
@@ -76,6 +78,7 @@ const minimax = (squares, depth, ai, isMax) => {
           next[i]='X';  
           // Call minimax recursively and choose the minimum value
           best = Math.min(best, minimax(next, depth + 1, ai, !isMax));
+          if(max_depth == depth) break;
         }
       }
     }
@@ -83,7 +86,8 @@ const minimax = (squares, depth, ai, isMax) => {
     return best;
   }
  
- const findBestMove = (squares, ai) => {
+ const findBestMove = (squares, ai, level) => {
+    max_depth = level;
     let bestVal = -1000;
     let bestMove = null;
   

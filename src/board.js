@@ -14,6 +14,7 @@ var object={
 
 var isAi=true;
 var count=0; 
+var level = -1;
 // class Check extends React.Component {
     
 //     render() {
@@ -86,7 +87,7 @@ class Square extends React.Component {
                 // console.log("in ai");
                   //console.log(this.state.squares);
                   
-                    let j=findBestMove(this.state.squares,'O');
+                    let j=findBestMove(this.state.squares,'O', level);
                     squares[j] = 'O';  
                   //console.log(squares);
                   //console.log(this.state.player);
@@ -140,6 +141,28 @@ class Square extends React.Component {
          }  
       return (
         <div >
+          <div>
+            <button className="depth1" onClick={()=>
+            {
+              level = 1;
+            }}>1</button> 
+            <button className="depth2" onClick={()=>
+            {
+              level = 2;
+            }}>2</button>
+            <button className="depth3" onClick={()=>
+            {
+              level = 3;
+            }}>3</button>
+            <button className="depth4" onClick={()=>
+            {
+              level = 4;
+            }}>4</button>
+            <button className="unlimited" onClick={()=>
+            {
+              level = -1;
+            }}>unlimited</button>
+          </div>
           <div>
             <button disabled={this.state.checkAi} className="checkAi" onClick={()=> 
             {
