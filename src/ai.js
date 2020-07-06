@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
+<<<<<<< HEAD
 var maxdepth ;
+=======
+let max_depth;
+>>>>>>> 43a7be4e160acc9c945b37d0b5faba608626f069
 const getEmptyCells = (squares) => {
     return squares
       .map((val, idx) => [val, idx])
@@ -63,8 +67,12 @@ const minimax = (squares, depth, ai, isMax) => {
   
           // Call minimax recursively and choose the maximum value
           best = Math.max(best, minimax(next, depth + 1, ai, !isMax));
+<<<<<<< HEAD
           if(maxdepth==depth)
           break;
+=======
+          if(max_depth == depth) break;
+>>>>>>> 43a7be4e160acc9c945b37d0b5faba608626f069
         }
       }
     } else {
@@ -79,8 +87,12 @@ const minimax = (squares, depth, ai, isMax) => {
           next[i]='X';  
           // Call minimax recursively and choose the minimum value
           best = Math.min(best, minimax(next, depth + 1, ai, !isMax));
+<<<<<<< HEAD
           if(maxdepth==depth)
           break;
+=======
+          if(max_depth == depth) break;
+>>>>>>> 43a7be4e160acc9c945b37d0b5faba608626f069
         }
       }
     }
@@ -88,7 +100,12 @@ const minimax = (squares, depth, ai, isMax) => {
     return best;
   }
  
+<<<<<<< HEAD
  const findBestMove = (squares, ai,level) => {
+=======
+ const findBestMove = (squares, ai, level) => {
+    max_depth = level;
+>>>>>>> 43a7be4e160acc9c945b37d0b5faba608626f069
     let bestVal = -1000;
     let bestMove = null;
     maxdepth=level;
