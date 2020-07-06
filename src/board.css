@@ -48,7 +48,7 @@ ol, ul {
     margin-top: 3px;
     padding: 0;
     text-align: center;
-    width: 100px;
+    width: 10px;
     color: #000;
     border-radius: 10px;
       
@@ -72,6 +72,7 @@ ol, ul {
 }
 
 .game {
+  
   display: flex;
   flex-direction: row;
 }

@@ -95,7 +95,7 @@ class Square extends React.Component {
             ); 
             
         }
-        //play music after winning or loosing
+        //play music after winning or loosing for AI
         playAudio(winner) {
           if(winner==='O')
           {
@@ -104,9 +104,9 @@ class Square extends React.Component {
             else{
               const audioEl1 = document.getElementsByClassName("audio-element1")[0];
             audioEl1.play();
-
             }
         } 
+        //play music after winning or loosing for human vs human
         play() {
           
             const win = document.getElementsByClassName("audio-element2")[0];
