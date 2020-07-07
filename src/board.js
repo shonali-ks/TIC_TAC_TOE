@@ -93,7 +93,7 @@ class Square extends React.Component {
 
         //human vs human
          object=nexthuman(squares,this.state.player,i,isAi,object.computer);
-         
+         count++;
            console.log(object.squares);
            const square=object.squares;
            console.log(i);
@@ -112,7 +112,7 @@ class Square extends React.Component {
                       return;
             if(object.computer)
                 {
-                  
+                  count++;
                   let j=findBestMove(this.state.squares,'O',level);
                   squares[j] = 'O'; 
                  
@@ -160,11 +160,12 @@ class Square extends React.Component {
     render() {
       //declare winner
         const winner = checkwinner(this.state.squares); 
-          count++;
+          
         let status;    
          if(winner)
             {  
               isGameOver = 1;     
+               
               if(!isAi)
              {status = 'Winner: ' + winner; this.play()}
              else if(winner==='O')
@@ -174,9 +175,9 @@ class Square extends React.Component {
         
         else { 
           console.log(count);
-          if(count >= 11 && isAi==true)
+          if(count >=9 && isAi==true)
             status = 'It\'s a tie';
-            else if(count == 11 )
+            else if(count == 9 )
             status = 'It\'s a tie';
             
             else if(!isAi)
@@ -206,21 +207,21 @@ class Square extends React.Component {
             <button disabled={this.state.checkAi} className="checkAi" onClick={()=> 
             {
               isAi=true;
-              if(count>=1)
+              
               this.setState({checkHuman:true})}}>vs Ai</button>
 
               {/* to play human vs human */}
             <button disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
             {
               isAi=false;
-              if(count>=1)
+              
               this.setState({checkAi:true})}}>vs Human</button>
 
               {/* reset button */}
             <button className="reset" onClick={()=>window.location.reload()}>Reset</button>
 
             {/* hints playing against AI */}
-            <button disabled={this.state.checkAi} className="suggestion" onClick={()=>{
+            <button  className="suggestion" onClick={()=>{
               let i=findBestMove(this.state.squares,'O',-1);
               let row=(i-(i%3))/3+1;
               let col=(i%3)+1;
@@ -254,7 +255,7 @@ class Square extends React.Component {
               if(isAi==true){
                 if(isGameOver == 1) alert("Game Over");
                 else{
-                if(count >= 11) alert("Game Over");
+                if(count >= 10) alert("Game Over");
                 else{
                 let temp1, temp2;
                 temp1 = stack_undo.pop();
@@ -269,12 +270,12 @@ class Square extends React.Component {
                 this.setState({
                   squares: this.state.squares,
                 });
-                count -= 3;}}
+                count -= 2;}}
               }
               } else{
                 if(isGameOver == 1) alert("Game Over");
                 else{
-                if(count >= 11) alert("Game Over");
+                if(count >= 9) alert("Game Over");
                 else{
                 let temp;
                 temp = stack_undo.pop();
@@ -287,7 +288,7 @@ class Square extends React.Component {
                   squares: this.state.squares,
                   player: !this.state.player,
                 });
-                count -= 2;
+                count -= 1;
                 }
               }}
             }
@@ -307,7 +308,7 @@ class Square extends React.Component {
                   this.setState({
                     squares: this.state.squares,
                   })
-                  count += 1;
+                  count += 2;
                 }
               }
               else{
@@ -320,7 +321,9 @@ class Square extends React.Component {
                 this.setState({
                   squares: this.state.squares,
                   player: !this.state.player,
-                });}
+                });
+               count += 1;
+              }
               }
             }}>Redo</button>
           </div>
