@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import nexthuman from './humanvshuman';
-import checkwinner from './winner';
+import nexthuman from './utils/humanvshuman';
+import checkwinner from './utils/winner';
 import findBestMove from './ai';
+import Stack from './utils/stack';
+import * as UndoRedo from './utils/UndoRedo';
+//import redo_function from './stack';
 import './board.css'
 import soundfile from './sounds/humanFail.mp3'
 import soundfile1 from './sounds/humanPass.mp3'
@@ -14,35 +17,6 @@ var object={
     computer:false,
 
 }
-
-class Stack{
-  constructor(){
-    this.items = [];
-    this.top = 0;
-  }
-  push(element){
-    this.items[this.top] = element;
-    this.top += 1;
-  }
-  pop(){
-    if(this.top == 0){
-      alert("Select your square before you call me");
-      return -1;
-    } else{
-      this.top = this.top-1;
-      return this.items.pop()
-    }
-  }
-  print(){
-    if(this.top == 0)
-    {
-      alert("enter");
-    }
-    for(let i = 0; i < this.top; i++){
-      console.log(this.items[i]);
-    }
-  }
-};
 
 var stack_undo = new Stack();
 var stack_redo = new Stack();
@@ -98,7 +72,7 @@ class Square extends React.Component {
            const square=object.squares;
            console.log(i);
            stack_undo.push(i);
-           //stack_undo.print();
+           stack_undo.print();
            this.setState({
                squares: square,
                player : object.player,
@@ -117,7 +91,7 @@ class Square extends React.Component {
                   squares[j] = 'O'; 
                  
                   stack_undo.push(j);
-                  //stack_undo.print();
+                  stack_undo.print();
                   this.setState({
                       squares: squares,
                       player : !this.state.player,
@@ -250,80 +224,36 @@ class Square extends React.Component {
             {this.renderSquare(8)}
           </div>
           <div>
-            <button className="undo-button" onClick={()=>
+            <button className = "undo_button" onClick={()=>
             {
-              if(isAi==true){
-                if(isGameOver == 1) alert("Game Over");
-                else{
-                if(count >= 10) alert("Game Over");
-                else{
-                let temp1, temp2;
-                temp1 = stack_undo.pop();
-                stack_redo.push(temp1);
-                temp2 = stack_undo.pop();
-                stack_redo.push(temp2);
-                console.log(temp1);
-                console.log(temp2);
-                if(temp1 != -1 && temp2 != -1){
-                this.state.squares[temp1]=null;
-                this.state.squares[temp2]=null;
-                this.setState({
-                  squares: this.state.squares,
-                });
-                count -= 2;}}
-              }
-              } else{
-                if(isGameOver == 1) alert("Game Over");
-                else{
-                if(count >= 9) alert("Game Over");
-                else{
-                let temp;
-                temp = stack_undo.pop();
-                stack_redo.push(temp);
-                //console.log(temp);
-                if(temp != -1){
-                this.state.squares[temp] = null;
-                //console.log(this.state.player);
+              if(isAi == true){
+              count = UndoRedo.undo_function(isAi, isGameOver, count, stack_undo, stack_redo, this.state.squares);
+              this.setState({
+                squares: this.state.squares,
+              })
+            }
+              else{
+                count = UndoRedo.undo_function(isAi, isGameOver, count, stack_undo, stack_redo, this.state.squares);
                 this.setState({
                   squares: this.state.squares,
                   player: !this.state.player,
-                });
-                count -= 1;
-                }
-              }}
-            }
+                })
+              } 
             }}>Undo</button>
-          </div>
-          <div>
-            <button className="redo-button" onClick={()=>
+            <button className ="redo_button" onClick={()=>
             {
-              if(isAi){
-                let temp1 = stack_redo.pop();
-                let temp2 = stack_redo.pop();
-                if(temp1 != -1 && temp2 != -1){
-                  stack_undo.push(temp1);
-                  stack_undo.push(temp2);
-                  this.state.squares[temp1] = 'X';
-                  this.state.squares[temp2] = 'O';
-                  this.setState({
-                    squares: this.state.squares,
-                  })
-                  count += 2;
-                }
+              if(isAi == true){
+                count = UndoRedo.redo_function(isAi, stack_redo, stack_undo, count, this.state.squares, this.state.player);
+                this.setState({
+                  squares: this.state.squares,
+                })
               }
               else{
-                let temp = stack_redo.pop();
-                if(temp != -1){
-                stack_undo.push(temp);
-                console.log(temp);
-                console.log(this.state.player);
-                this.state.squares[temp] = this.state.player?'X':'O';
+                count = UndoRedo.redo_function(isAi, stack_redo, stack_undo, count, this.state.squares, this.state.player);
                 this.setState({
                   squares: this.state.squares,
                   player: !this.state.player,
-                });
-               count += 1;
-              }
+                })
               }
             }}>Redo</button>
           </div>
@@ -354,3 +284,4 @@ class Square extends React.Component {
       );
     }
   }
+ 

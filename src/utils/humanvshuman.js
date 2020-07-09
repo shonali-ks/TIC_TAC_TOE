@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Board from './board';
+
 
 function nexthuman(square,player,i,isAi,computer){
 

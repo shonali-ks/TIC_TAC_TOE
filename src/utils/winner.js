@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Board from './board';
+
 
 function checkwinner(squares) {
     const lines = [
