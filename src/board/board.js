@@ -109,7 +109,7 @@ class Square extends React.Component {
             ); 
             
         }
-        //play music after winning or loosing for AI
+        //play music after winning or losing for AI
         playAudio(winner) {
           if(winner==='O')
           {
