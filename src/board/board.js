@@ -169,12 +169,10 @@ class Square extends React.Component {
           <source src={soundfile1}></source>
         </audio>
         <audio className="audio-element1">
-          
-          <source src={soundfile1}></source>
+           <source src={soundfile1}></source>
         </audio>
         <audio className="audio-element2">
-          
-          <source src={soundfile2}></source>
+            <source src={soundfile2}></source>
         </audio>
         
           {/* Buttons to choose */}
