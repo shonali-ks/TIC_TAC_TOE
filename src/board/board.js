@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import nexthuman from './utils/humanvshuman';
-import checkwinner from './utils/winner';
-import findBestMove from './ai';
-import Stack from './utils/stack';
-import * as UndoRedo from './utils/UndoRedo';
-//import redo_function from './stack';
+import nexthuman from '../utils/humanvshuman';
+import checkwinner from '../utils/winner';
+import findBestMove from '../utils/minmax';
+import Stack from '../utils/stack';
+import * as UndoRedo from '../utils/UndoRedo';
+//import alphabeta_move from './utils/alphabeta';
 import './board.css'
-import soundfile from './sounds/humanFail.mp3'
-import soundfile1 from './sounds/humanPass.mp3'
-import soundfile2 from './sounds/multi.mp3'
+import soundfile from '../sounds/humanFail.mp3'
+import soundfile1 from '../sounds/humanPass.mp3'
+import soundfile2 from '../sounds/multi.mp3'
+
 
 var object={
     icon : 'X',
@@ -87,7 +88,9 @@ class Square extends React.Component {
             if(object.computer)
                 {
                   count++;
-                  let j=findBestMove(this.state.squares,'O',level);
+                   let j=findBestMove(this.state.squares,'O',level);
+                  //let j=alphabeta_move(this.state.squares,'O',level);
+                  
                   squares[j] = 'O'; 
                  
                   stack_undo.push(j);
