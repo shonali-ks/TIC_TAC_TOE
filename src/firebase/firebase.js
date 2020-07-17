@@ -3,6 +3,7 @@ import "./firebase.css";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import  Game  from "../board/board";
+import  Game1  from "../board/four";
 import '../board/board.css';
 
 var firebaseConfig = {
@@ -17,7 +18,6 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-
 
 
 class Firebase extends Component {

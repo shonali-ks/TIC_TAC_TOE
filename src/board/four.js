@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import nexthuman from '../utils/humanvshuman';
-import checkwinner from '../utils/winner';
+import checkwinnerFour from '../utils/winner';
 import findBestMove from '../utils/minmax';
 import Stack from '../utils/stack';
 import * as UndoRedo from '../utils/UndoRedo';
@@ -9,7 +9,6 @@ import './board.css'
 import soundfile from '../sounds/humanFail.mp3'
 import soundfile1 from '../sounds/humanPass.mp3'
 import soundfile2 from '../sounds/multi.mp3'
-
 
 
 var object={
@@ -51,7 +50,7 @@ class Square extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          squares: Array(9).fill(null),
+          squares: Array(16).fill(null),
           player: true,
           checkAi : false,
           checkHuman:false,
@@ -64,7 +63,7 @@ class Square extends React.Component {
        {    
           //slice to copy the curernt state instead od modifying the exisiting array
            const squares = this.state.squares.slice();
-           if (checkwinner(squares) || squares[i])
+           if (checkwinnerFour(squares) || squares[i])
              return;
 
         //human vs human
@@ -84,16 +83,16 @@ class Square extends React.Component {
 
               //AI vs human
               const squares2 = this.state.squares.slice();
-                    if (checkwinner(squares2))
+                    if (checkwinnerFour(squares2))
                       return;
             if(object.computer)
                 {
                   count++;
                    //minmax algo
-                   //let j=findBestMove(this.state.squares,'O',level);
+                   let j=findBestMove(this.state.squares,'O',level);
 
                    //alphabeta algo
-                  let j=alphabeta_move(this.state.squares,'O',level);
+                  //let j=alphabeta_move(this.state.squares,'O',level);
                   
                   squares[j] = 'O'; 
                  
@@ -105,7 +104,7 @@ class Square extends React.Component {
                     });
                     object.computer=!object.computer;
                     const squares1 = this.state.squares.slice();
-                    if (checkwinner(squares1) || squares1[j])
+                    if (checkwinnerFour(squares1) || squares1[j])
                       return;
 
                 }
@@ -140,7 +139,7 @@ class Square extends React.Component {
   
     render() {
       //declare winner
-        const winner = checkwinner(this.state.squares); 
+        const winner = checkwinnerFour(this.state.squares); 
           
         let status;    
          if(winner)
@@ -156,9 +155,9 @@ class Square extends React.Component {
         
         else { 
           console.log(count);
-          if(count >=9 && isAi==true)
+          if(count >=16 && isAi==true)
             status = 'It\'s a tie';
-            else if(count == 9 )
+            else if(count == 16 )
             status = 'It\'s a tie';
             
             else if(!isAi)
@@ -202,8 +201,8 @@ class Square extends React.Component {
             {/* hints playing against AI */}
             <button  className="suggestion" onClick={()=>{
               let i=findBestMove(this.state.squares,'O',-1);
-              let row=(i-(i%3))/3+1;
-              let col=(i%3)+1;
+              let row=(i-(i%4))/4+1;
+              let col=(i%4)+1;
               alert(`Try row number ${row} and column number ${col} `);
             }}>Hints</button>
 
@@ -217,16 +216,25 @@ class Square extends React.Component {
             {this.renderSquare(0)}
             {this.renderSquare(1)}
             {this.renderSquare(2)}
+            {this.renderSquare(3)}
           </div>
           <div className="board-row">
-            {this.renderSquare(3)}
             {this.renderSquare(4)}
             {this.renderSquare(5)}
-          </div>
-          <div className="board-row">
             {this.renderSquare(6)}
             {this.renderSquare(7)}
+          </div>
+          <div className="board-row">
             {this.renderSquare(8)}
+            {this.renderSquare(9)}
+            {this.renderSquare(10)}
+            {this.renderSquare(11)}
+          </div>
+          <div className="board-row">
+            {this.renderSquare(12)}
+            {this.renderSquare(13)}
+            {this.renderSquare(14)}
+            {this.renderSquare(15)}
           </div>
           <div>
             <button className = "undo_button" onClick={()=>
@@ -268,7 +276,7 @@ class Square extends React.Component {
   }
   
   
-  export default  class Game extends React.Component {
+  export default  class Game1 extends React.Component {
     render() {
       return (
         <div className="game">
