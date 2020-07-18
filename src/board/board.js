@@ -9,8 +9,19 @@ import './board.css'
 import soundfile from '../sounds/humanFail.mp3'
 import soundfile1 from '../sounds/humanPass.mp3'
 import soundfile2 from '../sounds/multi.mp3'
+import firebase from '../firebase/firebase';
+const db = firebase.firestore();
 
-
+//score and match
+var scores=0;
+var matchplayed=0;
+var username;
+export const ini=(s,m,name)=>
+      {
+        scores=s;
+        matchplayed=m;
+        username=name;
+      }
 
 var object={
     icon : 'X',
@@ -55,10 +66,31 @@ class Square extends React.Component {
           player: true,
           checkAi : false,
           checkHuman:false,
+          
          
         };
       }
-
+     
+      trackScore(s)
+      {
+        if(level==-1)
+        {scores+=s;
+        db.collection('user').where('username','==',username).get().then(doc=>{
+          
+        
+            doc.docs.forEach(doc=>{
+              if(doc.data().username==username)
+              {var id=doc.id;}
+              db.collection("user").doc(id.toString()).update({matches:matchplayed+1,score:scores})
+              
+            })
+            
+            
+          })
+        }
+       
+    }
+      
     //saving states in square
       handleClick(i)
        {    
@@ -150,20 +182,20 @@ class Square extends React.Component {
               if(!isAi)
              {status = 'Winner: ' + winner; this.play()}
              else if(winner==='O')
-             {status = 'Winner: ' + 'Ai';this.playAudio(winner);}
+             {status = 'Winner: ' + 'Ai';this.playAudio(winner);this.trackScore(-100)}
              else  {status = 'Winner: ' + 'human';this.playAudio(winner);}
                } 
         
         else { 
           console.log(count);
           if(count >=9 && isAi==true)
-            status = 'It\'s a tie';
+            {status = 'It\'s a tie';this.trackScore(100)}
             else if(count == 9 )
             status = 'It\'s a tie';
             
             else if(!isAi)
             status = 'Next player: ' + (this.state.player ? 'X' : 'O');  
-            else  status = 'Next player: ' + (this.state.player ? 'Human' : 'Ai');
+            else  {status = 'Next player: ' + (this.state.player ? 'Human' : 'Ai');}
          }  
 
       return (
@@ -202,6 +234,8 @@ class Square extends React.Component {
             {/* hints playing against AI */}
             <button  className="suggestion" onClick={()=>{
               let i=findBestMove(this.state.squares,'O',-1);
+              if(isAi)
+              scores-=20;
               let row=(i-(i%3))/3+1;
               let col=(i%3)+1;
               alert(`Try row number ${row} and column number ${col} `);
@@ -236,6 +270,7 @@ class Square extends React.Component {
               this.setState({
                 squares: this.state.squares,
               })
+              scores-=10;
             }
               else{
                 count = UndoRedo.undo_function(isAi, isGameOver, count, stack_undo, stack_redo, this.state.squares);

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import './App.css';
-import Firebase from './firebase/firebase';
+import Firebase from './firebase/auth';
 
 class App extends Component {
  
