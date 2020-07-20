@@ -5,11 +5,16 @@ import findBestMove from '../utils/minmax';
 import Stack from '../utils/stack';
 import * as UndoRedo from '../utils/UndoRedo';
 import alphabeta_move from '../utils/alphabeta';
-import './board.css'
+import firebase from '../firebase/firebase';
+
 import soundfile from '../sounds/humanFail.mp3'
 import soundfile1 from '../sounds/humanPass.mp3'
 import soundfile2 from '../sounds/multi.mp3'
-import firebase from '../firebase/firebase';
+
+import './board.css'
+import { Button } from 'react-bootstrap';
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+
 const db = firebase.firestore();
 
 //score and match
@@ -48,9 +53,9 @@ class Square extends React.Component {
     render() {
       return (
         
-        <button className="square" onClick={()=>this.props.onClick()} >
+        <Button variant="outline-light" className="square" onClick={()=>this.props.onClick()} >
           {this.props.value}
-        </button>
+        </Button>
        
         //onclick calls onclick in rendersquare
       );
@@ -215,38 +220,37 @@ class Square extends React.Component {
           <div>
             
             {/* to play againt AI */}
-            <button disabled={this.state.checkAi} className="checkAi" onClick={()=> 
+            <Button variant="outline-light" disabled={this.state.checkAi} className="checkAi" onClick={()=> 
             {
               isAi=true;
               
-              this.setState({checkHuman:true})}}>vs Ai</button>
+              this.setState({checkHuman:true})}}>vs Ai</Button>
 
               {/* to play human vs human */}
-            <button disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
+              <Button variant="outline-light" disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
             {
               isAi=false;
               
-              this.setState({checkAi:true})}}>vs Human</button>
+              this.setState({checkAi:true})}}>vs Human</Button>
 
               {/* reset button */}
-            <button className="reset" onClick={()=>window.location.reload()}>Reset</button>
+              <Button variant="outline-light" className="reset" onClick={()=>window.location.reload()}>Reset</Button>
 
             {/* hints playing against AI */}
-            <button  className="suggestion" onClick={()=>{
+            <Button variant="outline-light" className="suggestion" onClick={()=>{
               let i=findBestMove(this.state.squares,'O',-1);
               if(isAi)
               scores-=20;
               let row=(i-(i%3))/3+1;
               let col=(i%3)+1;
               alert(`Try row number ${row} and column number ${col} `);
-            }}>Hints</button>
-
-            {/* UNDO */}
+            }}>Hints</Button>
             
 
             {/* display the board */}
         </div>
-          <div className="status">{status}</div>
+        <div className="board">
+          <div className="status" >{status}</div>
           <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -262,8 +266,9 @@ class Square extends React.Component {
             {this.renderSquare(7)}
             {this.renderSquare(8)}
           </div>
+          </div>
           <div>
-            <button className = "undo_button" onClick={()=>
+          <Button variant="outline-light" className = "undo_button" onClick={()=>
             {
               if(isAi == true){
               count = UndoRedo.undo_function(isAi, isGameOver, count, stack_undo, stack_redo, this.state.squares);
@@ -279,8 +284,8 @@ class Square extends React.Component {
                   player: !this.state.player,
                 })
               } 
-            }}>Undo</button>
-            <button className ="redo_button" onClick={()=>
+            }}>Undo</Button>
+            <Button variant="outline-light" className ="redo_button" onClick={()=>
             {
               if(isAi == true){
                 count = UndoRedo.redo_function(isAi, stack_redo, stack_undo, count, this.state.squares, this.state.player);
@@ -295,7 +300,7 @@ class Square extends React.Component {
                   player: !this.state.player,
                 })
               }
-            }}>Redo</button>
+            }}>Redo</Button>
           </div>
         </div>
       );
@@ -311,14 +316,15 @@ class Square extends React.Component {
             <Board />
           </div>
           <div className="game-info">
-            <h1>Depth </h1>
-            <p>If against Ai</p>
-          <button className="level" onClick={()=>level=1}>1</button>
-          <button className="level" onClick={()=>level=2}>2</button>
-          <button className="level" onClick={()=>level=3}>3</button>
-          <button className="level" onClick={()=>level=4}>4</button>
-          <button className="level" onClick={()=>level=-1}>Unlimited</button>
-            
+            <h1 className="depth">Depth </h1>
+            <p className="depth">If against Ai</p>
+          <ButtonGroup className="mr-2" aria-label="First group">
+          <Button variant="outline-light" className="level" onClick={()=>level=1}>1</Button>
+          <Button variant="outline-light" className="level" onClick={()=>level=2}>2</Button>          
+          <Button variant="outline-light" className="level" onClick={()=>level=3}>3</Button>          
+          <Button variant="outline-light" className="level" onClick={()=>level=4}>4</Button>         
+          <Button variant="outline-light" className="level" onClick={()=>level=-1}>Unlimited</Button>
+          </ButtonGroup>            
           </div>
         </div>
       );

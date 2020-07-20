@@ -1,0 +1,26 @@
+img{
+    width: 60%;
+    height: 60%;
+    border-radius: 100px;
+  }
+  .login{
+    color: white;
+    float: right;
+    border-style: groove;
+    border-color: white;
+    width: 10%;
+    height:10%;
+  }
+  .table{
+    color: white;
+    width:20%;
+  }
+  marquee{
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: xx-large;
+  }
+ .game{
+   top:0%;
+  margin-left:20%;
+ }

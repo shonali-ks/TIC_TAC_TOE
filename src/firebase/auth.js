@@ -6,7 +6,9 @@ import  Game1  from "../board/four";
 import firebase from './firebase'
 
 import '../board/board.css';
-import "./firebase.css";
+import "./auth.css";
+import { Button } from 'react-bootstrap';
+
 
 const db = firebase.firestore();
  
@@ -77,34 +79,37 @@ class Firebase extends Component {
     return (
     <div className="top">
       {this.state.isSignedIn ?
-       <span className="auth">
-         <p>Please refresh the page if you can't see your username on the board</p>
-         <th>user</th>
-          <th>matches</th>
-          <th>score</th>
-         {this.state.userData && this.state.userData.map(user=>{
-           return(
-             
-               
-               <tr>
-                 
-                 <td>{user.username}</td>
-                 <td>{user.matches}</td>
-                 <td>{user.score}</td>
-               </tr>
-            
-           )
-         })}
-         <div>Signed in</div>
-      <button onClick={()=>firebase.auth().signOut()}>Sign out</button>
-      <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
-      
+       <div className="auth">
+        
+        <marquee>Welcome {firebase.auth().currentUser.displayName}</marquee>
+         <div className="login">
+           <p className="name">{firebase.auth().currentUser.displayName}</p>
             <img
               alt="profile picture"
               src={firebase.auth().currentUser.photoURL}
             />
+            <Button variant="outline-light" onClick={()=>firebase.auth().signOut()}>Sign out</Button>
+        </div>
+        <div className="table">
+         <p>Please refresh the page if you can't see your username on the board</p>
+         <th>user</th>
+          <th>matches</th>
+          <th>score</th>
+
+         {this.state.userData && this.state.userData.map(user=>{
+           return(              
+               <tr>                 
+                 <td>{user.username}</td>
+                 <td>{user.matches}</td>
+                 <td>{user.score}</td>
+               </tr>            
+           )
+         })}
+        </div>
+        <div className="game">
       <Game/>
-      </span>
+      </div>
+      </div>
       :<StyledFirebaseAuth uiConfig={this.uiConfig}
       firebaseAuth={firebase.auth()}
       />

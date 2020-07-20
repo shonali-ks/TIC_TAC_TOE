@@ -16,6 +16,9 @@ ol, ul {
 
 .status {
   margin-bottom: 10px;
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: x-large;
 }
 
 .square {
@@ -25,12 +28,12 @@ ol, ul {
     font-size: 24px;
     font-weight: 700;
     line-height: 34px;
-    height: 60px;
+    height: 80px;
     margin-right: 1%;
     margin-top: 3px;
     padding: 0;
     text-align: center;
-    width: 60px;
+    width: 80px;
     color: #000;
     border-radius: 20px;
     
@@ -71,22 +74,31 @@ ol, ul {
 .kbd-navigation .square:focus {
   background: #ddd;
 }
-
-.game {
-  
-  display: flex;
-  flex-direction: row;
+.game-board{
+  width: 40%;
+  position: absolute;
+  top: 20%;
+  padding:2%
 }
 
 .game-info {
-  margin-left: 20px;
+    position: relative;
+    margin-top: 30%;
+    padding: 2px;
 }
 .grid{
     margin: 20%;
 }
 
-.level:hover{
-
-  background-color: yellow;
-
+.depth{
+  color: white;
+  font-family: 'Times New Roman', Times, serif;
+}
+.undo_button{
+  margin-top:2%;
+  margin-right: 5%;
+  margin-left:5%;
+}
+.redo_button{
+  margin-top:2%
 }

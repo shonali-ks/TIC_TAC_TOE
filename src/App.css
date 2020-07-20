@@ -1,19 +1,5 @@
-.App {
-  text-align: center;
-  margin: 10% 0 0 40%;
-}
 
 
 
-@media (max-width: 1400px) {
-  .App {
-    max-width: 500px;
-    margin: 20px auto;
-  }
-}
 
-@media (max-width: 575px) {
-  .App {
-    margin: 0px;
-  }
-}
+
