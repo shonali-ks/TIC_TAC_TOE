@@ -117,7 +117,7 @@ class Firebase extends Component {
       </div>
       </div>
       :<div className="landing-page">
-        <div className="status"><Rules/></div>
+        
         
         <StyledFirebaseAuth uiConfig={this.uiConfig}
       firebaseAuth={firebase.auth()}
