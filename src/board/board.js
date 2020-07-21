@@ -71,9 +71,8 @@ class Square extends React.Component {
           player: true,
           checkAi : false,
           checkHuman:false,
-          
-         
         };
+        
       }
      
       trackScore(s)
@@ -107,9 +106,9 @@ class Square extends React.Component {
         //human vs human
          object=nexthuman(squares,this.state.player,i,isAi,object.computer);
          count++;
-           console.log(object.squares);
+           //console.log(object.squares);
            const square=object.squares;
-           console.log(i);
+           //console.log(i);
            stack_undo.push(i);
            stack_undo.print();
            this.setState({
@@ -192,7 +191,7 @@ class Square extends React.Component {
                } 
         
         else { 
-          console.log(count);
+          //console.log(count);
           if(count >=9 && isAi==true)
             {status = 'It\'s a tie';this.trackScore(100)}
             else if(count == 9 )
@@ -301,11 +300,39 @@ class Square extends React.Component {
                 })
               }
             }}>Redo</Button>
+            {/* <Button variant="outline-light" className="replay_button" onClick={()=>
+            {
+              var itemList = stack_undo.returnItems();
+              if(itemList.length == 0) alert("Play for Replay");
+              this.setState({
+                squares: Array(9).fill(null),
+              })
+              var start = 0;
+              var playerState = true;
+              function replay_loop(square) {
+                setTimeout(function() {
+                  console.log(itemList[start]);
+                  square[itemList[start]] = playerState?'X':'O';
+                  this.setState({
+                    squares: square,
+                  });
+                  start++;
+                  if(playerState == true) playerState = false;
+                  else playerState = true;
+                  if(start < itemList.length){
+                    replay_loop(this.state.squares);
+                  }
+                }, 2000);
+              }
+              replay_loop(this.state.squares);
+             
+            }}>Replay</Button> */}
           </div>
         </div>
       );
     }
   }
+
   
   
   export default  class Game extends React.Component {

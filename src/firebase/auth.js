@@ -2,8 +2,9 @@ import React, { Component } from "react"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import  Game  from "../board/board";
 import {ini} from '../board/board';
-import  Game1  from "../board/four";
 import firebase from './firebase'
+import Rules from './rules'
+
 
 import '../board/board.css';
 import "./auth.css";
@@ -11,12 +12,13 @@ import { Button } from 'react-bootstrap';
 
 
 const db = firebase.firestore();
- 
 class Firebase extends Component {
   state= { 
     isSignedIn:false ,
     username:"",
-    userData:null
+    userData:null,
+    guest:false,
+    status:"Login"
   }
   uiConfig = {
     signInFlow: "popup",
@@ -29,6 +31,13 @@ class Firebase extends Component {
       signInSuccessWithAuthResult:()=>false
     }
     
+  }
+  check(){
+    this.setState({guest:!this.state.guest})
+    if(this.state.guest)
+    this.setState({status:"Login"})
+    else
+    this.setState({status:"Logout"})
   }
   componentDidMount = ()=>{
     
@@ -50,12 +59,9 @@ class Firebase extends Component {
         
               doc.docs.forEach(doc=>{
                 if(doc.data().username==this.state.username)
-                {console.log(doc.data());ini(doc.data().score,doc.data().matches,doc.data().username);}              
-                
-              })             
-                          
-          }         
-          
+                {console.log(doc.data());ini(doc.data().score,doc.data().matches,doc.data().username);}     
+              })                                 
+          }            
         })         
         
       }
@@ -78,7 +84,7 @@ class Firebase extends Component {
   render(){
     return (
     <div className="top">
-      {this.state.isSignedIn ?
+      {(this.state.isSignedIn) ?
        <div className="auth">
         
         <marquee>Welcome {firebase.auth().currentUser.displayName}</marquee>
@@ -110,13 +116,21 @@ class Firebase extends Component {
       <Game/>
       </div>
       </div>
-      :<StyledFirebaseAuth uiConfig={this.uiConfig}
+      :<div className="landing-page">
+        <div className="status"><Rules/></div>
+        
+        <StyledFirebaseAuth uiConfig={this.uiConfig}
       firebaseAuth={firebase.auth()}
-      />
+    
+      />    
+      <div className="status">  
+      <Button variant="outline-light" onClick={()=>this.check()}>{this.state.status} as guest
+        </Button>
+        {this.state.guest?<div  className="games"><Game/></div>:null}
+        </div>
+      </div> 
       
     }
-    
-     
     </div>
     )
 }

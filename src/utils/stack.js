@@ -1,4 +1,3 @@
-import React, {Component} from 'react';
 
 class Stack{
     constructor(){
@@ -26,6 +25,9 @@ class Stack{
       for(let i = 0; i < this.top; i++){
         console.log(this.items[i]);
       }
+    }
+    returnItems(){
+      return this.items;
     }
   };
 
