@@ -4,7 +4,7 @@ import  Game  from "../board/board";
 import {ini,guest} from '../board/board';
 import firebase from './firebase'
 // import Rules from './rules'
-import Game1 from "../board/four"
+//import Game1 from "../board/four"
 
 
 import '../board/board.css';

@@ -24,12 +24,14 @@ var scores=0;
 var matchplayed=0;
 var username;
 var isGuest=false;
+
 export const ini=(s,m,name)=>
       {
         scores=s;
         matchplayed=m;
         username=name;
       }
+
 export const guest=(boo)=>{
   isGuest=boo;
 }
