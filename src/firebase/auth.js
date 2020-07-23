@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import  Game  from "../board/board";
-import {ini} from '../board/board';
+import {ini,guest} from '../board/board';
 import firebase from './firebase'
-import Rules from './rules'
+// import Rules from './rules'
+//import Game1 from "../board/four"
 
 
 import '../board/board.css';
@@ -124,7 +125,7 @@ class Firebase extends Component {
     
       />    
       <div className="status">  
-      <Button variant="outline-light" onClick={()=>this.check()}>{this.state.status} as guest
+      <Button variant="outline-light" onClick={()=>{this.check();guest(true)}}>{this.state.status} as guest
         </Button>
         {this.state.guest?<div  className="games"><Game/></div>:null}
         </div>
