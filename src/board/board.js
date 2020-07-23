@@ -3,6 +3,8 @@ import nexthuman from '../utils/humanvshuman';
 import checkwinner from '../utils/winner';
 import findBestMove from '../utils/minmax';
 import Stack from '../utils/stack';
+import Queue from '../utils/queue';
+
 import * as UndoRedo from '../utils/UndoRedo';
 import alphabeta_move from '../utils/alphabeta';
 import firebase from '../firebase/firebase';
@@ -21,12 +23,16 @@ const db = firebase.firestore();
 var scores=0;
 var matchplayed=0;
 var username;
+var isGuest=false;
 export const ini=(s,m,name)=>
       {
         scores=s;
         matchplayed=m;
         username=name;
       }
+export const guest=(boo)=>{
+  isGuest=boo;
+}
 
 var object={
     icon : 'X',
@@ -38,6 +44,8 @@ var object={
 
 var stack_undo = new Stack();
 var stack_redo = new Stack();
+var queue =new Queue();
+var i=1;
 
 //check if user selected AI
 var isAi=true;
@@ -66,6 +74,7 @@ class Square extends React.Component {
   class Board extends React.Component {
     constructor(props) {
         super(props);
+        this.click=this.click.bind(this);
         this.state = {
           squares: Array(9).fill(null),
           player: true,
@@ -111,6 +120,7 @@ class Square extends React.Component {
            //console.log(i);
            stack_undo.push(i);
            stack_undo.print();
+           queue.push(i);
            this.setState({
                squares: square,
                player : object.player,
@@ -134,6 +144,7 @@ class Square extends React.Component {
                   squares[j] = 'O'; 
                  
                   stack_undo.push(j);
+                  queue.push(j);
                   stack_undo.print();
                   this.setState({
                       squares: squares,
@@ -173,6 +184,17 @@ class Square extends React.Component {
       value={this.state.squares[i]} 
       onClick={() => this.handleClick(i)} />;
     }
+
+    click=(square)=>{
+      
+     this.setState(function() {
+      return { squares:square };
+      },()=>console.log(this.state.squares))
+     
+    
+    }
+  
+
   
     render() {
       //declare winner
@@ -186,14 +208,14 @@ class Square extends React.Component {
               if(!isAi)
              {status = 'Winner: ' + winner; this.play()}
              else if(winner==='O')
-             {status = 'Winner: ' + 'Ai';this.playAudio(winner);this.trackScore(-100)}
+             {status = 'Winner: ' + 'Ai';this.playAudio(winner);if(!isGuest)this.trackScore(-100)}
              else  {status = 'Winner: ' + 'human';this.playAudio(winner);}
                } 
         
         else { 
           //console.log(count);
           if(count >=9 && isAi==true)
-            {status = 'It\'s a tie';this.trackScore(100)}
+            {status = 'It\'s a tie';if(!isGuest)this.trackScore(100)}
             else if(count == 9 )
             status = 'It\'s a tie';
             
@@ -300,33 +322,50 @@ class Square extends React.Component {
                 })
               }
             }}>Redo</Button>
-            {/* <Button variant="outline-light" className="replay_button" onClick={()=>
+            <Button variant="outline-light" className="replay_button" onClick={()=>
             {
-              var itemList = stack_undo.returnItems();
+              var itemList = queue.returnItems();
+              
+              console.log(itemList);
               if(itemList.length == 0) alert("Play for Replay");
-              this.setState({
-                squares: Array(9).fill(null),
-              })
-              var start = 0;
               var playerState = true;
-              function replay_loop(square) {
-                setTimeout(function() {
-                  console.log(itemList[start]);
-                  square[itemList[start]] = playerState?'X':'O';
-                  this.setState({
-                    squares: square,
-                  });
-                  start++;
-                  if(playerState == true) playerState = false;
-                  else playerState = true;
-                  if(start < itemList.length){
-                    replay_loop(this.state.squares);
-                  }
-                }, 2000);
-              }
-              replay_loop(this.state.squares);
-             
-            }}>Replay</Button> */}
+              if(i==1)
+              {itemList.reverse();this.setState({
+                squares: Array(9).fill(null),
+              },()=>{
+              
+              
+              var square=this.state.squares.slice();
+              if(itemList.length)
+              {
+                
+                this.click(square);
+                 
+              console.log(this.state.squares);
+                square[itemList[itemList.length-1]] = playerState?'X':'O';
+                if(playerState == true) playerState = false;
+                else playerState = true;
+                itemList.pop();
+                i++;
+                
+                     
+          }             
+            })}
+            else{
+              var square=this.state.squares.slice();
+              if(itemList.length)
+              {
+                
+                this.click(square);
+                 
+              console.log(this.state.squares);
+                square[itemList[itemList.length-1]] = i%2?'X':'O';
+                if(playerState == true) playerState = false;
+                else playerState = true;
+                itemList.pop();
+                i++;
+            }
+            }}}>{i==1?"Replay":"Click for move "+i}</Button>
           </div>
         </div>
       );

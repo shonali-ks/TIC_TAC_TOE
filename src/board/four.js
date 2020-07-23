@@ -89,15 +89,15 @@ class Square extends React.Component {
                 {
                   count++;
                    //minmax algo
-                   let j=findBestMove(this.state.squares,'O',level);
+                   //let j=findBestMove(this.state.squares,'O',level);
 
                    //alphabeta algo
-                  //let j=alphabeta_move(this.state.squares,'O',level);
-                  
+                  let j=alphabeta_move(this.state.squares,'O',level);
+                  console.log("j"+j);
                   squares[j] = 'O'; 
                  
                   stack_undo.push(j);
-                  stack_undo.print();
+                  //stack_undo.print();
                   this.setState({
                       squares: squares,
                       player : !this.state.player,
