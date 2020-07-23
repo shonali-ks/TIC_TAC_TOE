@@ -46,6 +46,12 @@ var isGameOver = 0;
 
 //check the depth chosen
 var level=-1;
+//two algorithms are used in this game
+//alpha-beta pruning algorithm and minimax algorithm
+//a variable algo is declared and is assigned 0 for minimax algorithm and 1 for alpha-beta pruning algorithm
+var minimax = false;
+var alphaBeta = false;
+var algo = 1;
 
 //Make squares
 class Square extends React.Component {
@@ -124,12 +130,15 @@ class Square extends React.Component {
                       return;
             if(object.computer)
                 {
-                  count++;
-                   //minmax algo
-                   //let j=findBestMove(this.state.squares,'O',level);
+                  count++; 
+                  let j;
+                   /*minmax algo
+                   let j=findBestMove(this.state.squares,'O',level);
 
-                   //alphabeta algo
-                  let j=alphabeta_move(this.state.squares,'O',level);
+                   /alphabeta algo
+                   let j=alphabeta_move(this.state.squares,'O',level);*/
+                   if(algo == 1) {j=findBestMove(this.state.squares,'O',level);}
+                   else if(algo == -1) {j=alphabeta_move(this.state.squares,'O',level);}
                   
                   squares[j] = 'O'; 
                  
@@ -235,18 +244,41 @@ class Square extends React.Component {
               {/* reset button */}
               <Button variant="outline-light" className="reset" onClick={()=>window.location.reload()}>Reset</Button>
 
+            
             {/* hints playing against AI */}
             <Button variant="outline-light" className="suggestion" onClick={()=>{
-              let i=findBestMove(this.state.squares,'O',-1);
+              let i;
+              if(algo == 1){
+              i=findBestMove(this.state.squares,'O',-1);
               if(isAi)
               scores-=20;
               let row=(i-(i%3))/3+1;
               let col=(i%3)+1;
-              alert(`Try row number ${row} and column number ${col} `);
+              alert(`Try row number ${row} and column number ${col} minimax`);}
+              else if(algo == -1){
+              i=alphabeta_move(this.state.squares,'O',-1);
+              if(isAi)
+              scores-=20;
+              let row=(i-(i%3))/3+1;
+              let col=(i%3)+1;
+              alert(`Try row number ${row} and column number ${col} alpha-beta`);
+              }
             }}>Hints</Button>
             
 
             {/* display the board */}
+        </div>
+        <div>
+        <Button variant="outline-light" disabled={minimax} className="algo-checker" onClick={()=>
+              {
+                algo = 1;
+                alphaBeta=true;
+              }}>Minimax</Button>
+        <Button variant="outline-light" disabled={alphaBeta} className="algo-checker" onClick={()=>
+              {
+                algo = -1;
+                minimax=true;
+              }}>alpha-beta</Button>
         </div>
         <div className="board">
           <div className="status" >{status}</div>
@@ -327,6 +359,7 @@ class Square extends React.Component {
               replay_loop(this.state.squares);
              
             }}>Replay</Button> */}
+           
           </div>
         </div>
       );
@@ -351,7 +384,9 @@ class Square extends React.Component {
           <Button variant="outline-light" className="level" onClick={()=>level=3}>3</Button>          
           <Button variant="outline-light" className="level" onClick={()=>level=4}>4</Button>         
           <Button variant="outline-light" className="level" onClick={()=>level=-1}>Unlimited</Button>
-          </ButtonGroup>            
+          </ButtonGroup> 
+          
+                    
           </div>
         </div>
       );
