@@ -12,11 +12,17 @@ img{
     height:10%;
   }
   .table{
-    color: white;
+    color: rgb(255, 255, 255);
     width:20%;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+    
+  }
+  .table th{
+    font-size: larger;
   }
   marquee{
-    color:white;
+    color:rgb(250, 248, 248);
     font-family: 'Times New Roman', Times, serif;
     font-size: xx-large;
   }

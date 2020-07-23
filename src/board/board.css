@@ -83,7 +83,7 @@ ol, ul {
 
 .game-info {
     position: relative;
-    margin-top: 35%;
+    /* margin-top: 20%; */
     padding: 2px;
 }
 .grid{
@@ -97,8 +97,11 @@ ol, ul {
 .undo_button{
   margin-top:2%;
   margin-right: 5%;
-  margin-left:5%;
 }
 .redo_button{
-  margin-top:2%
+  margin-top:2%;
+  margin-right: 5%
+}
+.replay_button{
+  margin-top:2%;
 }

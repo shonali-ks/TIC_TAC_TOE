@@ -10,6 +10,7 @@ import firebase from './firebase'
 import '../board/board.css';
 import "./auth.css";
 import { Button } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table'
 
 
 const db = firebase.firestore();
@@ -98,20 +99,29 @@ class Firebase extends Component {
             <Button variant="outline-light" onClick={()=>firebase.auth().signOut()}>Sign out</Button>
         </div>
         <div className="table">
+        
          <p>Please refresh the page if you can't see your username on the board</p>
-         <th>user</th>
-          <th>matches</th>
-          <th>score</th>
-
+         
+         <Table striped bordered hover variant="dark">
+          <thead>
+          <tr>
+          <th>Users</th>
+          <th>Matches</th>
+          <th>Score</th>
+          </tr>
+        </thead>
          {this.state.userData && this.state.userData.map(user=>{
-           return(              
+           return( 
+            <tbody>             
                <tr>                 
                  <td>{user.username}</td>
                  <td>{user.matches}</td>
                  <td>{user.score}</td>
-               </tr>            
+               </tr>  
+               </tbody>          
            )
          })}
+         </Table>
         </div>
         <div className="game">
       <Game/>
