@@ -95,13 +95,45 @@ ol, ul {
   font-family: 'Times New Roman', Times, serif;
 }
 .undo_button{
+  background-color: rgba(0,0,0,0.4);
   margin-top:2%;
-  margin-right: 5%;
+  margin-left: 3%;
 }
 .redo_button{
+  background-color: rgba(0,0,0,0.4);
   margin-top:2%;
-  margin-right: 5%
+  margin-left: 2%
 }
 .replay_button{
+  background-color: rgba(0,0,0,0.4);
   margin-top:2%;
+  margin-left: 2%;
+}
+.algo-checker1{
+  background-color: rgba(0,0,0,0.4);
+  margin-top:2%;
+  margin-left:5%;
+}
+.algo-checker2{
+  background-color: rgba(0,0,0,0.4);
+  margin-top:2%;
+  margin-left:2%;
+}
+.first-line {
+  margin-left: -5%;
+}
+.checkAi{
+  background-color: rgba(0,0,0,0.4);
+}
+.checkhuman{
+  background-color: rgba(0,0,0,0.4);
+}
+.reset{
+  background-color: rgba(0,0,0,0.4);
+}
+.suggestion{
+  background-color: rgba(0,0,0,0.4);
+}
+.level{
+  background-color: rgba(0,0,0,0.4);
 }

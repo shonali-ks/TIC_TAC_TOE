@@ -292,12 +292,12 @@ class Square extends React.Component {
             {/* display the board */}
         </div>
         <div>
-        <Button variant="outline-light" disabled={minimax} className="algo-checker" onClick={()=>
+        <Button variant="outline-light" disabled={minimax} className="algo-checker1" onClick={()=>
               {
                 algo = 1;
                 alphaBeta=true;
               }}>Minimax</Button>
-        <Button variant="outline-light" disabled={alphaBeta} className="algo-checker" onClick={()=>
+        <Button variant="outline-light" disabled={alphaBeta} className="algo-checker2" onClick={()=>
               {
                 algo = -1;
                 minimax=true;
