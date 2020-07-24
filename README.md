@@ -16,7 +16,7 @@ Team Name: GSS Mars Rover
 
 It is ready to be deployed!!
 
-Demo: https://tic-tac-toe123.herokuapp.com/
+Demo: https://tic-tac-toe123.herokuapp.com/<br/>
 For documentation:https://docs.google.com/document/d/1PoWgdqf7F76VPVqnu9V2dKGVjdrYafoh8TzUiJVnQx4/edit?usp=sharing
 
 # How to run on local machine
@@ -25,5 +25,5 @@ For documentation:https://docs.google.com/document/d/1PoWgdqf7F76VPVqnu9V2dKGVjd
 - npm install
 - npm run build
 - npm start
-
+<br/>
 The app will be running on http://127.0.0.1:3000/
