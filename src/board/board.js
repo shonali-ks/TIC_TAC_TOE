@@ -309,7 +309,7 @@ class Square extends React.Component {
               {
                 algo = -1;
                 minimax=true;
-              }}>alpha-beta</Button>
+              }}>Alpha-beta Pruning</Button>
         </div>
         <div className="board">
           <div className="status" >{status}</div>
