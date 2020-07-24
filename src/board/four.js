@@ -4,6 +4,7 @@ import {checkwinnerFour} from '../utils/winner';
 import findBestMove from '../utils/minmax';
 import Stack from '../utils/stack';
 import * as UndoRedo from '../utils/UndoRedo';
+import Queue from '../utils/queue';
 
 import './board.css'
 import { Button } from 'react-bootstrap';
@@ -20,13 +21,12 @@ var object={
 
 var stack_undo = new Stack();
 var stack_redo = new Stack();
+var queue =new Queue();
 
 //check if user selected AI
 var count=0; 
 var isGameOver = 0;
-
-//check the depth chosen
-var level=-1;
+let i=1;
 
 //Make squares
 class Square extends React.Component {
@@ -47,6 +47,7 @@ class Square extends React.Component {
   class Board extends React.Component {
     constructor(props) {
         super(props);
+        this.click=this.click.bind(this);
         this.state = {
           squares: Array(16).fill(null),
           player: true,
@@ -68,7 +69,7 @@ class Square extends React.Component {
            const square=object.squares;
            console.log(i);
            stack_undo.push(i);
-           stack_undo.print();
+           queue.push(i);
            this.setState({
                squares: square,
                player : object.player,
@@ -98,6 +99,14 @@ class Square extends React.Component {
       onClick={() => this.handleClick(i)} />;
     }
   
+    click=(square)=>{
+      
+      this.setState(function() {
+       return { squares:square };
+       },()=>console.log(this.state.squares))
+      
+     
+     }
     render() {
       //declare winner
         const winner = checkwinnerFour(this.state.squares); 
@@ -113,7 +122,7 @@ class Square extends React.Component {
         
         else { 
           console.log(count);
-           if(count == 16 )
+           if(count === 16 )
             status = 'It\'s a tie';
             
             status = 'Next player: ' + (this.state.player ? 'X' : 'O');  
@@ -192,6 +201,35 @@ class Square extends React.Component {
                 })
               
             }}>Redo</Button>
+            <Button variant="outline-light" className="replay_button" onClick={()=>
+            {
+              var itemList = queue.returnItems();
+              
+              console.log(itemList);
+              if(itemList.length === 0) alert("Play for Replay");
+              if(i===1)
+              {itemList.reverse();this.setState({
+                squares: Array(9).fill(null),
+              },()=>{
+              var square=this.state.squares.slice();
+              if(itemList.length)
+              {
+                this.click(square);
+                square[itemList[itemList.length-1]] = i%2?'X':'O';
+                itemList.pop();
+                i++;                    
+          }             
+            })}
+            else{
+              var square=this.state.squares.slice();
+              if(itemList.length)
+              {
+                this.click(square);
+                square[itemList[itemList.length-1]] = i%2?'X':'O';
+                itemList.pop();
+                i++;
+            }
+            }}}>{i===1?"Replay":"Click for move "+i}</Button>
           </div>
         </div>
       );
