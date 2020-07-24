@@ -1,6 +1,3 @@
-import React, { Component } from 'react';
-
-
 function nexthuman(square,player,i,isAi,computer){
 
     square[i]=player? 'X':'O';  

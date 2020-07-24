@@ -63,7 +63,7 @@ const alphabeta = (squares, depth, ai, isMax,alpha,beta) => {
           // Call alphabeta recursively and choose the maximum value
           best = Math.max(best, alphabeta(next, depth + 1, ai, !isMax,alpha,beta));
           
-          if(max_depth == depth) break;
+          if(max_depth === depth) break;
           alpha = Math.max(alpha,best);
           if(beta <= alpha)
           break;
@@ -82,7 +82,7 @@ const alphabeta = (squares, depth, ai, isMax,alpha,beta) => {
           // Call alphabeta recursively and choose the minimum value
           best = Math.min(best, alphabeta(next, depth + 1, ai, !isMax,alpha,beta));
 
-          if(max_depth == depth) break;
+          if(max_depth === depth) break;
           beta = Math.min(beta,best);
           if(beta <= alpha)
           break;

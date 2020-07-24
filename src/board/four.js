@@ -283,17 +283,7 @@ class Square extends React.Component {
           <div className="game-board">
             <Board />
           </div>
-          <div className="game-info">
-            <h1>Depth </h1>
-            <p>If against Ai</p>
-          <button className="level" onClick={()=>level=1}>1</button>
-          <button className="level" onClick={()=>level=2}>2</button>
-          <button className="level" onClick={()=>level=3}>3</button>
-          <button className="level" onClick={()=>level=4}>4</button>
-          <button className="level" onClick={()=>level=-1}>Unlimited</button>
-            
           </div>
-        </div>
       );
     }
   }

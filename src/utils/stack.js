@@ -9,7 +9,7 @@ class Stack{
       this.top += 1;
     }
     pop(){
-      if(this.top == 0){
+      if(this.top === 0){
         alert("Select your square before you call me");
         return -1;
       } else{
@@ -18,7 +18,7 @@ class Stack{
       }
     }
     print(){
-      if(this.top == 0)
+      if(this.top === 0)
       {
         alert("enter");
       }

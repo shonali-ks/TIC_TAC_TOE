@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-
 let max_depth;
 const getEmptyCells = (squares) => {
     return squares
@@ -64,7 +62,7 @@ const minimax = (squares, depth, ai, isMax) => {
           // Call minimax recursively and choose the maximum value
           best = Math.max(best, minimax(next, depth + 1, ai, !isMax));
           
-          if(max_depth == depth) break;
+          if(max_depth === depth) break;
         }
       }
     } else {
@@ -79,7 +77,7 @@ const minimax = (squares, depth, ai, isMax) => {
           next[i]='X';  
           // Call minimax recursively and choose the minimum value
           best = Math.min(best, minimax(next, depth + 1, ai, !isMax));
-          if(max_depth == depth) break;
+          if(max_depth === depth) break;
         }
       }
     }

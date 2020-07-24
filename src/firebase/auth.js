@@ -3,6 +3,9 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import  Game  from "../board/board";
 import {ini,guest} from '../board/board';
 import firebase from './firebase'
+import Accordion from 'react-bootstrap/Accordion'
+import Card from 'react-bootstrap/Card'
+
 // import Rules from './rules'
 //import Game1 from "../board/four"
 
@@ -20,7 +23,8 @@ class Firebase extends Component {
     username:"",
     userData:null,
     guest:false,
-    status:"Login"
+    status:"Login",
+    
   }
   uiConfig = {
     signInFlow: "popup",
@@ -60,7 +64,7 @@ class Firebase extends Component {
           else{ 
         
               doc.docs.forEach(doc=>{
-                if(doc.data().username==this.state.username)
+                if(doc.data().username===this.state.username)
                 {console.log(doc.data());ini(doc.data().score,doc.data().matches,doc.data().username);}     
               })                                 
           }            
@@ -128,17 +132,26 @@ class Firebase extends Component {
       </div>
       </div>
       :<div className="landing-page">
-        
-        
-        <StyledFirebaseAuth uiConfig={this.uiConfig}
-      firebaseAuth={firebase.auth()}
-    
-      />    
-      <div className="status">  
-      <Button variant="outline-light" onClick={()=>{this.check();guest(true)}}>{this.state.status} as guest
-        </Button>
-        {this.state.guest?<div  className="games"><Game/></div>:null}
+     <div className="tip">
+        <Accordion defaultActiveKey="0">
+       <Card>
+         <Accordion.Toggle as={Card.Header} eventKey="0">
+           Pro Tip!
+         </Accordion.Toggle>
+         <Accordion.Collapse eventKey="0">
+           <Card.Body>Sign in with Google to feature on the leaderboard and see how you fare when compared to other players
+            You could also play as guest, but then you lose out on a chance to make it to the leaderboard. <StyledFirebaseAuth uiConfig={this.uiConfig}
+              firebaseAuth={firebase.auth()}
+              /> </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion> 
         </div>
+      <div className="but" >
+      <Button variant="outline-light"  onClick={()=>{this.check();guest(true)}}>{this.state.status} as guest
+        </Button>
+        </div>
+      {this.state.guest?<div  className="games"><Game/></div>:null}
       </div> 
       
     }

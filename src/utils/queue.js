@@ -10,7 +10,7 @@ class Queue{
       this.back += 1;
     }
     pop(){
-      if(this.top == this.back){
+      if(this.top === this.back){
         alert("Select your square before you call me");
         return -1;
       } else{
@@ -19,7 +19,7 @@ class Queue{
       }
     }
     print(){
-      if(this.top == 0)
+      if(this.top === 0)
       {
         alert("enter");
       }

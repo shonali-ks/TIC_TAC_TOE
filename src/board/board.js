@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import nexthuman from '../utils/humanvshuman';
 import checkwinner from '../utils/winner';
 import findBestMove from '../utils/minmax';
 import Stack from '../utils/stack';
 import Queue from '../utils/queue';
-
 import * as UndoRedo from '../utils/UndoRedo';
 import alphabeta_move from '../utils/alphabeta';
 import firebase from '../firebase/firebase';
@@ -47,13 +46,13 @@ var object={
 var stack_undo = new Stack();
 var stack_redo = new Stack();
 var queue =new Queue();
-var i=1;
+
 
 //check if user selected AI
 var isAi=true;
 var count=0; 
 var isGameOver = 0;
-
+let i=1;
 //check the depth chosen
 var level=-1;
 //two algorithms are used in this game
@@ -94,13 +93,13 @@ class Square extends React.Component {
      
       trackScore(s)
       {
-        if(level==-1)
+        if(level===-1)
         {scores+=s;
         db.collection('user').where('username','==',username).get().then(doc=>{
           
         
             doc.docs.forEach(doc=>{
-              if(doc.data().username==username)
+              if(doc.data().username===username)
               {var id=doc.id;}
               db.collection("user").doc(id.toString()).update({matches:matchplayed+1,score:scores})
               
@@ -149,8 +148,8 @@ class Square extends React.Component {
 
                    /alphabeta algo
                    let j=alphabeta_move(this.state.squares,'O',level);*/
-                   if(algo == 1) {j=findBestMove(this.state.squares,'O',level);}
-                   else if(algo == -1) {j=alphabeta_move(this.state.squares,'O',level);}
+                   if(algo === 1) {j=findBestMove(this.state.squares,'O',level);}
+                   else if(algo === -1) {j=alphabeta_move(this.state.squares,'O',level);}
                   
                   squares[j] = 'O'; 
                  
@@ -219,15 +218,15 @@ class Square extends React.Component {
               if(!isAi)
              {status = 'Winner: ' + winner; this.play()}
              else if(winner==='O')
-             {status = 'Winner: ' + 'Ai';this.playAudio(winner);if(!isGuest)this.trackScore(-100)}
-             else  {status = 'Winner: ' + 'human';this.playAudio(winner);}
+             {status = 'Winner: Ai';this.playAudio(winner);if(!isGuest)this.trackScore(-100)}
+             else  {status = 'Winner: human';this.playAudio(winner);}
                } 
         
         else { 
           //console.log(count);
-          if(count >=9 && isAi==true)
+          if(count >=9 && isAi===true)
             {status = 'It\'s a tie';if(!isGuest)this.trackScore(100)}
-            else if(count == 9 )
+            else if(count === 9 )
             status = 'It\'s a tie';
             
             else if(!isAi)
@@ -272,14 +271,14 @@ class Square extends React.Component {
             {/* hints playing against AI */}
             <Button variant="outline-light" className="suggestion" onClick={()=>{
               let i;
-              if(algo == 1){
+              if(algo === 1){
               i=findBestMove(this.state.squares,'O',-1);
               if(isAi)
               scores-=20;
               let row=(i-(i%3))/3+1;
               let col=(i%3)+1;
               alert(`Try row number ${row} and column number ${col} minimax`);}
-              else if(algo == -1){
+              else if(algo === -1){
               i=alphabeta_move(this.state.squares,'O',-1);
               if(isAi)
               scores-=20;
@@ -322,10 +321,10 @@ class Square extends React.Component {
             {this.renderSquare(8)}
           </div>
           </div>
-          <div>
+           <div>   
           <Button variant="outline-light" className = "undo_button" onClick={()=>
             {
-              if(isAi == true){
+              if(isAi === true){
               count = UndoRedo.undo_function(isAi, isGameOver, count, stack_undo, stack_redo, this.state.squares);
               this.setState({
                 squares: this.state.squares,
@@ -342,7 +341,7 @@ class Square extends React.Component {
             }}>Undo</Button>
             <Button variant="outline-light" className ="redo_button" onClick={()=>
             {
-              if(isAi == true){
+              if(isAi === true){
                 count = UndoRedo.redo_function(isAi, stack_redo, stack_undo, count, this.state.squares, this.state.player);
                 this.setState({
                   squares: this.state.squares,
@@ -361,45 +360,30 @@ class Square extends React.Component {
               var itemList = queue.returnItems();
               
               console.log(itemList);
-              if(itemList.length == 0) alert("Play for Replay");
-              var playerState = true;
-              if(i==1)
+              if(itemList.length === 0) alert("Play for Replay");
+              if(i===1)
               {itemList.reverse();this.setState({
                 squares: Array(9).fill(null),
               },()=>{
-              
-              
               var square=this.state.squares.slice();
               if(itemList.length)
               {
-                
                 this.click(square);
-                 
-              console.log(this.state.squares);
-                square[itemList[itemList.length-1]] = playerState?'X':'O';
-                if(playerState == true) playerState = false;
-                else playerState = true;
+                square[itemList[itemList.length-1]] = i%2?'X':'O';
                 itemList.pop();
-                i++;
-                
-                     
+                i++;                    
           }             
             })}
             else{
               var square=this.state.squares.slice();
               if(itemList.length)
               {
-                
                 this.click(square);
-                 
-              console.log(this.state.squares);
                 square[itemList[itemList.length-1]] = i%2?'X':'O';
-                if(playerState == true) playerState = false;
-                else playerState = true;
                 itemList.pop();
                 i++;
             }
-            }}}>{i==1?"Replay":"Click for move "+i}</Button>
+            }}}>{i===1?"Replay":"Click for move "+i}</Button>
           </div>
         </div>
       );
@@ -410,7 +394,9 @@ class Square extends React.Component {
   
   export default  class Game extends React.Component {
     render() {
+      
       return (
+        
         <div className="game">
           <div className="game-board">
             <Board />
@@ -425,8 +411,6 @@ class Square extends React.Component {
           <Button variant="outline-light" className="level" onClick={()=>level=4}>4</Button>         
           <Button variant="outline-light" className="level" onClick={()=>level=-1}>Unlimited</Button>
           </ButtonGroup> 
-          
-                    
           </div>
         </div>
       );
