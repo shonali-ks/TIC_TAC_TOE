@@ -17,13 +17,16 @@ import { Button } from 'react-bootstrap';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 const db = firebase.firestore();
+//two algorithms are used in this game
+//alpha-beta pruning algorithm and minimax algorithm
 
-//score and match
+//keep track of score and match
 var scores=0;
 var matchplayed=0;
 var username;
 var isGuest=false;
 
+//init score and match
 export const ini=(s,m,name)=>
       {
         scores=s;
@@ -31,6 +34,7 @@ export const ini=(s,m,name)=>
         username=name;
       }
 
+//check if guest or no
 export const guest=(boo)=>{
   isGuest=boo;
 }
@@ -52,23 +56,25 @@ var queue =new Queue();
 var isAi=true;
 var count=0; 
 var isGameOver = 0;
+//track of moves
 let i=1;
+
 //check the depth chosen
 var level=-1;
-//two algorithms are used in this game
-//alpha-beta pruning algorithm and minimax algorithm
+
 //a variable algo is declared and is assigned 0 for minimax algorithm and 1 for alpha-beta pruning algorithm
 var minimax = false;
 var alphaBeta = false;
 var algo = 1;
-var Uid=1
+
+
 //Make squares
 class Square extends React.Component {
     
     render() {
       return (
         
-        <Button variant="outline-light" className="square"  onClick={()=>{this.props.onClick();Uid++;}} >
+        <Button variant="outline-light" className="square"  onClick={()=>{this.props.onClick();}} >
           {this.props.value}
         </Button>
        
@@ -90,15 +96,13 @@ class Square extends React.Component {
         };
         
       }
-     
+     //store in firestore
       trackScore(s)
       {
         if(level===-1)
         {scores+=s;
         db.collection('user').where('username','==',username).get().then(doc=>{
-          
-        
-            doc.docs.forEach(doc=>{
+        doc.docs.forEach(doc=>{
               if(doc.data().username===username)
               {var id=doc.id;}
               db.collection("user").doc(id.toString()).update({matches:matchplayed+1,score:scores})
@@ -114,7 +118,6 @@ class Square extends React.Component {
     //saving states in square
       handleClick(i)
        {    
-          //slice to copy the curernt state instead od modifying the exisiting array
            const squares = this.state.squares.slice();
            if (checkwinner(squares) || squares[i])
              return;
@@ -122,11 +125,9 @@ class Square extends React.Component {
         //human vs human
          object=nexthuman(squares,this.state.player,i,isAi,object.computer);
          count++;
-           //console.log(object.squares);
+
            const square=object.squares;
-           //console.log(i);
            stack_undo.push(i);
-           stack_undo.print();
            queue.push(i);
            this.setState({
                squares: square,
@@ -143,19 +144,16 @@ class Square extends React.Component {
                 {
                   count++; 
                   let j;
-                   /*minmax algo
-                   let j=findBestMove(this.state.squares,'O',level);
-
-                   /alphabeta algo
-                   let j=alphabeta_move(this.state.squares,'O',level);*/
+                   /*minmax algo*/
                    if(algo === 1) {j=findBestMove(this.state.squares,'O',level);}
+                   //alphabeta algo
                    else if(algo === -1) {j=alphabeta_move(this.state.squares,'O',level);}
                   
                   squares[j] = 'O'; 
                  
                   stack_undo.push(j);
                   queue.push(j);
-                  stack_undo.print();
+
                   this.setState({
                       squares: squares,
                       player : !this.state.player,
@@ -181,6 +179,7 @@ class Square extends React.Component {
             audioEl1.play();
             }
         } 
+
         //play music after winning or loosing for human vs human
         play() {
           
@@ -188,23 +187,19 @@ class Square extends React.Component {
             win.play();}
             
         
-  //to render each square
-    renderSquare(i) {
-      return <Square 
-      value={this.state.squares[i]} 
-      onClick={() => this.handleClick(i)} />;
-    }
-
-    click=(square)=>{
-      
-     this.setState(function() {
-      return { squares:square };
-      },()=>console.log(this.state.squares))
-     
-    
-    }
-  
-
+        //to render each square
+          renderSquare(i) {
+            return <Square 
+            value={this.state.squares[i]} 
+            onClick={() => this.handleClick(i)} />;
+          }
+          //change state for replay
+          click=(square)=>{
+            
+          this.setState(function() {
+            return { squares:square };
+            },()=>console.log(this.state.squares))   
+          }
   
     render() {
       //declare winner
@@ -213,19 +208,33 @@ class Square extends React.Component {
         let status;    
          if(winner)
             {  
-              isGameOver = 1;     
-               
-              if(!isAi)
-             {status = 'Winner: ' + winner; this.play()}
-             else if(winner==='O')
-             {status = 'Winner: Ai';this.playAudio(winner);if(!isGuest)this.trackScore(-100)}
-             else  {status = 'Winner: human';this.playAudio(winner);}
-               } 
+                isGameOver = 1;     
+                
+                if(!isAi)
+               {
+                status = 'Winner: ' + winner;
+                  this.play()
+               }
+              else if(winner==='O')
+               {
+                status = 'Winner: Ai';
+                this.playAudio(winner);
+                if(!isGuest)
+                this.trackScore(-100)
+               }
+              else  {status = 'Winner: human';
+              this.playAudio(winner);
+              }
+            } 
         
         else { 
           //console.log(count);
           if(count >=9 && isAi===true)
-            {status = 'It\'s a tie';if(!isGuest)this.trackScore(100)}
+            {
+              status = 'It\'s a tie';
+              if(!isGuest)
+              this.trackScore(100)
+            }
             else if(count === 9 )
             status = 'It\'s a tie';
             
@@ -237,9 +246,9 @@ class Square extends React.Component {
       return (
         <div >
           <audio className="audio-element">
-          <source src={soundfile}></source>
-          <source src={soundfile1}></source>
-        </audio>
+            <source src={soundfile}></source>
+            <source src={soundfile1}></source>
+          </audio>
         <audio className="audio-element1">
            <source src={soundfile1}></source>
         </audio>
@@ -247,21 +256,20 @@ class Square extends React.Component {
             <source src={soundfile2}></source>
         </audio>
         
-          {/* Buttons to choose */}
           <div>
             
             {/* to play againt AI */}
+
             <Button variant="outline-light" disabled={this.state.checkAi} className="checkAi" onClick={()=> 
             {
               isAi=true;
-              
               this.setState({checkHuman:true})}}>vs Ai</Button>
 
               {/* to play human vs human */}
-              <Button variant="outline-light" disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
+
+            <Button variant="outline-light" disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
             {
               isAi=false;
-              
               this.setState({checkAi:true})}}>vs Human</Button>
 
               {/* reset button */}

@@ -7,7 +7,8 @@ import Game1 from '../src/board/four'
 
 class App extends Component {
  state={
-  game1:false
+  game1:false,
+  status:"Play 4*4 human vs human!"
  }
   render(){
     return (
@@ -16,7 +17,14 @@ class App extends Component {
       
       <Firebase/> 
       <div className="but">
-      <Button className="but1" variant="outline-light" onClick={()=>{this.setState({game1:!this.state.game1})}}>Play 4*4 human vs human!
+      <Button className="but1" variant="outline-light" 
+      onClick={()=>{
+        this.setState({game1:!this.state.game1})
+        if(this.state.game1)
+        this.setState({status:"Play 4*4 human vs human!"})
+        else
+        this.setState({status:"Scroll down!"})}}>
+        {this.state.status}
         </Button>
         </div> 
         

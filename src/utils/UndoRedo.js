@@ -10,14 +10,11 @@ export function undo_function(isAi, isGameOver, count, stack_undo, stack_redo, s
         stack_redo.push(temp1);
         temp2 = stack_undo.pop();
         stack_redo.push(temp2);
-        console.log(temp1);
-        console.log(temp2);
-        if(temp1 !== -1 && temp2 != -1){
+
+        if(temp1 !== -1 && temp2 !== -1){
         squares[temp1]=null;
         squares[temp2]=null;
-        /*this.setState({
-          squares: this.state.squares,
-        });*/
+
         count -= 2;
         }}
       }
@@ -29,14 +26,9 @@ export function undo_function(isAi, isGameOver, count, stack_undo, stack_redo, s
         let temp;
         temp = stack_undo.pop();
         stack_redo.push(temp);
-        //console.log(temp);
         if(temp !== -1){
         squares[temp] = null;
-        //console.log(this.state.player);
-        /*this.setState({
-          squares: this.state.squares,
-          player: !this.state.player,
-        });*/
+
         count -= 1;
         }
       }}
@@ -53,9 +45,7 @@ export function redo_function(isAi, stack_redo, stack_undo, count, squares, play
           stack_undo.push(temp2);
           squares[temp1] = 'X';
           squares[temp2] = 'O';
-          /*this.setState({
-            squares: this.state.squares,
-          })*/
+
           count += 2;
         }
       }
@@ -64,12 +54,8 @@ export function redo_function(isAi, stack_redo, stack_undo, count, squares, play
         if(temp !== -1){
         stack_undo.push(temp);
         console.log(temp);
-        //console.log(this.state.player);
         squares[temp] = player?'X':'O';
-        /*this.setState({
-          squares: this.state.squares,
-          player: !this.state.player,
-        });*/
+  
        count += 1;
       }
       }

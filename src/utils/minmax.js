@@ -49,7 +49,7 @@ const minimax = (squares, depth, ai, isMax) => {
   
     // If this maximizer's move 
     if (isMax) {
-      best = -1000;
+      best = -Infinity;
   
       for (let i = 0; i < lengthGrid; i++) {
         const cell = squares[i];
@@ -66,7 +66,7 @@ const minimax = (squares, depth, ai, isMax) => {
         }
       }
     } else {
-      best = 1000;
+      best = Infinity;
   
       for (let i = 0; i < lengthGrid; i++) {
         const cell = squares[i];
@@ -87,16 +87,14 @@ const minimax = (squares, depth, ai, isMax) => {
  
  const findBestMove = (squares, ai, level) => {
     max_depth = level;
-    let bestVal = -1000;
+    let bestVal = -Infinity;
     let bestMove = null;
    
     const lengthGrid = squares.length;
-    //console.log(squares);
   
     for (let i = 0; i < lengthGrid; i++) {
       const cell = squares[i];
-      //console.log(i);
-      //console.log(cell)
+
       if (cell === null) {
         // Make a move
         const next= squares.slice();
@@ -107,12 +105,8 @@ const minimax = (squares, depth, ai, isMax) => {
         if(ai==='X')
          boo=true;
         else boo = false;
-
-        // Compute evaluation function for this move.
         const moveVal = minimax(next, 0, ai, boo);
-  
-        // If the value of the current move is more than the best value, then update best
-        if (moveVal > bestVal) {
+          if (moveVal > bestVal) {
           bestVal = moveVal;
           bestMove = i;
         }

@@ -1,7 +1,6 @@
 import React from 'react';
 import nexthuman from '../utils/humanvshuman';
 import {checkwinnerFour} from '../utils/winner';
-import findBestMove from '../utils/minmax';
 import Stack from '../utils/stack';
 import * as UndoRedo from '../utils/UndoRedo';
 import Queue from '../utils/queue';
@@ -10,7 +9,7 @@ import './board.css'
 import { Button } from 'react-bootstrap';
 import soundfile2 from '../sounds/multi.mp3'
 
-
+//four by four human vs human
 var object={
     icon : 'X',
     squares:null,
@@ -23,7 +22,7 @@ var stack_undo = new Stack();
 var stack_redo = new Stack();
 var queue =new Queue();
 
-//check if user selected AI
+
 var count=0; 
 var isGameOver = 0;
 let i=1;
@@ -62,9 +61,9 @@ class Square extends React.Component {
            if (checkwinnerFour(squares) || squares[i])
              return;
 
-        //human vs human
-         object=nexthuman(squares,this.state.player,i,false,object.computer);
-         count++;
+          //human vs human
+           object=nexthuman(squares,this.state.player,i,false,object.computer);
+           count++;
            console.log(object.squares);
            const square=object.squares;
            console.log(i);
@@ -101,12 +100,13 @@ class Square extends React.Component {
   
     click=(square)=>{
       
-      this.setState(function() {
+      this.setState(function() 
+      {
        return { squares:square };
-       },()=>console.log(this.state.squares))
-      
+       })  
      
      }
+
     render() {
       //declare winner
         const winner = checkwinnerFour(this.state.squares); 
@@ -115,16 +115,13 @@ class Square extends React.Component {
          if(winner)
             {  
               isGameOver = 1;     
-               
-             {status = 'Winner: ' + winner; this.play()}
-            
-               } 
+              status = 'Winner: ' + winner; this.play()            
+            } 
         
         else { 
-          console.log(count);
+          //console.log(count);
            if(count === 16 )
             status = 'It\'s a tie';
-            
             status = 'Next player: ' + (this.state.player ? 'X' : 'O');  
          }  
 
@@ -134,8 +131,6 @@ class Square extends React.Component {
         <audio className="audio-element2">
             <source src={soundfile2}></source>
         </audio>
-        
-          {/* Buttons to choose */}
           <div>
              {/* reset button */}
               <Button variant="outline-light"className="reset" onClick={()=>window.location.reload()}>Reset</Button>
@@ -169,7 +164,6 @@ class Square extends React.Component {
           <div>
           <Button variant="outline-light" className = "undo_button" onClick={()=>
             {
-          
                 count = UndoRedo.undo_function(false, isGameOver, count, stack_undo, stack_redo, this.state.squares);
                 this.setState({
                   squares: this.state.squares,
@@ -179,7 +173,6 @@ class Square extends React.Component {
             }}>Undo</Button>
            <Button variant="outline-light" className ="redo_button" onClick={()=>
             {
-              
                 count = UndoRedo.redo_function(false, stack_redo, stack_undo, count, this.state.squares, this.state.player);
                 this.setState({
                   squares: this.state.squares,
@@ -194,17 +187,18 @@ class Square extends React.Component {
               console.log(itemList);
               if(itemList.length === 0) alert("Play for Replay");
               if(i===1)
-              {itemList.reverse();this.setState({
-                squares: Array(9).fill(null),
-              },()=>{
-              var square=this.state.squares.slice();
-              if(itemList.length)
               {
-                this.click(square);
-                square[itemList[itemList.length-1]] = i%2?'X':'O';
-                itemList.pop();
-                i++;                    
-          }             
+                  itemList.reverse();this.setState({
+                  squares: Array(9).fill(null),
+                },()=>{
+                var square=this.state.squares.slice();
+                if(itemList.length)
+                {
+                    this.click(square);
+                    square[itemList[itemList.length-1]] = i%2?'X':'O';
+                    itemList.pop();
+                    i++;                    
+                }             
             })}
             else{
               var square=this.state.squares.slice();
