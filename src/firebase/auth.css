@@ -15,7 +15,8 @@ img{
   .table{
     color: rgb(255, 255, 255);
    height: 250px;
-   overflow: scroll;
+   overflow-y: scroll;
+   overflow-x: hidden;
     font-family: 'Times New Roman', Times, serif;
     font-size: large;
     
