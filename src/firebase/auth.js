@@ -142,7 +142,8 @@ class Firebase extends Component {
            <Card.Body>Sign in with Google to feature on the leaderboard and see how you fare when compared to other players
             You could also play as guest, but then you lose out on a chance to make it to the leaderboard. <StyledFirebaseAuth uiConfig={this.uiConfig}
               firebaseAuth={firebase.auth()}
-              /> </Card.Body>
+              /> 
+              P.S : Default settings of algo is minimax and game settings is against Ai.</Card.Body>
             </Accordion.Collapse>
           </Card>
         </Accordion> 
