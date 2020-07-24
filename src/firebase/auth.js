@@ -148,7 +148,7 @@ class Firebase extends Component {
         </Accordion> 
         </div>
       <div className="but" >
-      <Button variant="outline-light"  onClick={()=>{this.check();guest(true)}}>{this.state.status} as guest
+      <Button className="but1" variant="outline-light"  onClick={()=>{this.check();guest(true)}}>{this.state.status} as guest
         </Button>
         </div>
       {this.state.guest?<div  className="games"><Game/></div>:null}

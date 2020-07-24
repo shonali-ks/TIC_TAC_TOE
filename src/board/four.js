@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import nexthuman from '../utils/humanvshuman';
-import checkwinnerFour from '../utils/winner';
+import {checkwinnerFour} from '../utils/winner';
 import findBestMove from '../utils/minmax';
 import Stack from '../utils/stack';
 import * as UndoRedo from '../utils/UndoRedo';
-import alphabeta_move from '../utils/alphabeta';
+
 import './board.css'
-import soundfile from '../sounds/humanFail.mp3'
-import soundfile1 from '../sounds/humanPass.mp3'
+import { Button } from 'react-bootstrap';
 import soundfile2 from '../sounds/multi.mp3'
 
 
@@ -23,7 +22,6 @@ var stack_undo = new Stack();
 var stack_redo = new Stack();
 
 //check if user selected AI
-var isAi=true;
 var count=0; 
 var isGameOver = 0;
 
@@ -52,9 +50,6 @@ class Square extends React.Component {
         this.state = {
           squares: Array(16).fill(null),
           player: true,
-          checkAi : false,
-          checkHuman:false,
-         
         };
       }
 
@@ -67,7 +62,7 @@ class Square extends React.Component {
              return;
 
         //human vs human
-         object=nexthuman(squares,this.state.player,i,isAi,object.computer);
+         object=nexthuman(squares,this.state.player,i,false,object.computer);
          count++;
            console.log(object.squares);
            const square=object.squares;
@@ -85,45 +80,11 @@ class Square extends React.Component {
               const squares2 = this.state.squares.slice();
                     if (checkwinnerFour(squares2))
                       return;
-            if(object.computer)
-                {
-                  count++;
-                   //minmax algo
-                   //let j=findBestMove(this.state.squares,'O',level);
-
-                   //alphabeta algo
-                  let j=alphabeta_move(this.state.squares,'O',level);
-                  console.log("j"+j);
-                  squares[j] = 'O'; 
-                 
-                  stack_undo.push(j);
-                  //stack_undo.print();
-                  this.setState({
-                      squares: squares,
-                      player : !this.state.player,
-                    });
-                    object.computer=!object.computer;
-                    const squares1 = this.state.squares.slice();
-                    if (checkwinnerFour(squares1) || squares1[j])
-                      return;
-
-                }
               }  
             ); 
             
         }
-        //play music after winning or losing for AI
-        playAudio(winner) {
-          if(winner==='O')
-          {
-            const audioEl = document.getElementsByClassName("audio-element")[0];
-            audioEl.play();}
-            else{
-              const audioEl1 = document.getElementsByClassName("audio-element1")[0];
-            audioEl1.play();
-            }
-        } 
-        //play music after winning or loosing for human vs human
+
         play() {
           
             const win = document.getElementsByClassName("audio-element2")[0];
@@ -146,34 +107,21 @@ class Square extends React.Component {
             {  
               isGameOver = 1;     
                
-              if(!isAi)
              {status = 'Winner: ' + winner; this.play()}
-             else if(winner==='O')
-             {status = 'Winner: ' + 'Ai';this.playAudio(winner);}
-             else  {status = 'Winner: ' + 'human';this.playAudio(winner);}
+            
                } 
         
         else { 
           console.log(count);
-          if(count >=16 && isAi==true)
-            status = 'It\'s a tie';
-            else if(count == 16 )
+           if(count == 16 )
             status = 'It\'s a tie';
             
-            else if(!isAi)
             status = 'Next player: ' + (this.state.player ? 'X' : 'O');  
-            else  status = 'Next player: ' + (this.state.player ? 'Human' : 'Ai');
          }  
 
       return (
         <div >
-          <audio className="audio-element">
-          <source src={soundfile}></source>
-          <source src={soundfile1}></source>
-        </audio>
-        <audio className="audio-element1">
-           <source src={soundfile1}></source>
-        </audio>
+          
         <audio className="audio-element2">
             <source src={soundfile2}></source>
         </audio>
@@ -181,32 +129,19 @@ class Square extends React.Component {
           {/* Buttons to choose */}
           <div>
             
-            {/* to play againt AI */}
-            <button disabled={this.state.checkAi} className="checkAi" onClick={()=> 
-            {
-              isAi=true;
-              
-              this.setState({checkHuman:true})}}>vs Ai</button>
 
-              {/* to play human vs human */}
-            <button disabled= {this.state.checkHuman} className="checkhuman" onClick={()=> 
-            {
-              isAi=false;
-              
-              this.setState({checkAi:true})}}>vs Human</button>
 
               {/* reset button */}
-            <button className="reset" onClick={()=>window.location.reload()}>Reset</button>
+              <Button variant="outline-light"className="reset" onClick={()=>window.location.reload()}>Reset</Button>
 
             {/* hints playing against AI */}
-            <button  className="suggestion" onClick={()=>{
+            <Button variant="outline-light" className="suggestion" onClick={()=>{
               let i=findBestMove(this.state.squares,'O',-1);
               let row=(i-(i%4))/4+1;
               let col=(i%4)+1;
               alert(`Try row number ${row} and column number ${col} `);
-            }}>Hints</button>
+            }}>Hints</Button>
 
-            {/* UNDO */}
             
 
             {/* display the board */}
@@ -237,38 +172,26 @@ class Square extends React.Component {
             {this.renderSquare(15)}
           </div>
           <div>
-            <button className = "undo_button" onClick={()=>
+          <Button variant="outline-light" className = "undo_button" onClick={()=>
             {
-              if(isAi == true){
-              count = UndoRedo.undo_function(isAi, isGameOver, count, stack_undo, stack_redo, this.state.squares);
-              this.setState({
-                squares: this.state.squares,
-              })
-            }
-              else{
-                count = UndoRedo.undo_function(isAi, isGameOver, count, stack_undo, stack_redo, this.state.squares);
+          
+                count = UndoRedo.undo_function(false, isGameOver, count, stack_undo, stack_redo, this.state.squares);
                 this.setState({
                   squares: this.state.squares,
                   player: !this.state.player,
                 })
-              } 
-            }}>Undo</button>
-            <button className ="redo_button" onClick={()=>
+              
+            }}>Undo</Button>
+           <Button variant="outline-light" className ="redo_button" onClick={()=>
             {
-              if(isAi == true){
-                count = UndoRedo.redo_function(isAi, stack_redo, stack_undo, count, this.state.squares, this.state.player);
-                this.setState({
-                  squares: this.state.squares,
-                })
-              }
-              else{
-                count = UndoRedo.redo_function(isAi, stack_redo, stack_undo, count, this.state.squares, this.state.player);
+              
+                count = UndoRedo.redo_function(false, stack_redo, stack_undo, count, this.state.squares, this.state.player);
                 this.setState({
                   squares: this.state.squares,
                   player: !this.state.player,
                 })
-              }
-            }}>Redo</button>
+              
+            }}>Redo</Button>
           </div>
         </div>
       );
@@ -287,4 +210,3 @@ class Square extends React.Component {
       );
     }
   }
- 

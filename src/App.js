@@ -16,7 +16,7 @@ class App extends Component {
       
       <Firebase/> 
       <div className="but">
-      <Button variant="outline-light" onClick={()=>{this.setState({game1:!this.state.game1})}}>Play 4*4 human vs human!
+      <Button className="but1" variant="outline-light" onClick={()=>{this.setState({game1:!this.state.game1})}}>Play 4*4 human vs human!
         </Button>
         </div> 
         

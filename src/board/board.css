@@ -97,7 +97,6 @@ ol, ul {
 .undo_button{
   background-color: rgba(0,0,0,0.4);
   margin-top:2%;
-  margin-left: 3%;
 }
 .redo_button{
   background-color: rgba(0,0,0,0.4);

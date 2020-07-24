@@ -1,7 +1,12 @@
 .but{
     margin-left:40%;
     margin-top:1%;
+
 }
+.but1{
+    background-color: rgba(0,0,0,0.4);
+  
+  }
 .games{
     margin-left: 20%;
 }
