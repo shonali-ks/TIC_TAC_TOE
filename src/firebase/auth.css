@@ -10,6 +10,7 @@ img{
     border-color: white;
     width: 10%;
     height:10%;
+    background-color: rgba(0,0,0,0.4);
   }
   .table{
     color: rgb(255, 255, 255);
@@ -42,6 +43,7 @@ img{
 .games{
   position: relative;
  
- 
 }
-
+.btn{
+  background-color: rgba(0,0,0,0.4);
+}
