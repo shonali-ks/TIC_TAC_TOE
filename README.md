@@ -1,3 +1,19 @@
+This Repository is for The Microsoft Mars Colonization Program by Ace Hacker
+
+Project Name: Tic-Tac-Toe
+
+Team Name: GSS Mars Rover
+
+
+
+| Member name|Email Id| 
+| :------------: |:---------------:| 
+| K S Shonali      |kshonalis72@gmail.com  |
+| Shreeya Sanjay Sand|shreeyajain12@gmail.com|    
+| Gayathri Gutla |      gayathrihogwarts@gmail.com  |  
+ 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
