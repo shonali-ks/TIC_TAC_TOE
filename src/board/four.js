@@ -137,22 +137,8 @@ class Square extends React.Component {
         
           {/* Buttons to choose */}
           <div>
-            
-
-
-              {/* reset button */}
+             {/* reset button */}
               <Button variant="outline-light"className="reset" onClick={()=>window.location.reload()}>Reset</Button>
-
-            {/* hints playing against AI */}
-            <Button variant="outline-light" className="suggestion" onClick={()=>{
-              let i=findBestMove(this.state.squares,'O',-1);
-              let row=(i-(i%4))/4+1;
-              let col=(i%4)+1;
-              alert(`Try row number ${row} and column number ${col} `);
-            }}>Hints</Button>
-
-            
-
             {/* display the board */}
         </div>
           <div className="status">{status}</div>

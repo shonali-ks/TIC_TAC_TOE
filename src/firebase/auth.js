@@ -6,10 +6,6 @@ import firebase from './firebase'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 
-// import Rules from './rules'
-//import Game1 from "../board/four"
-
-
 import '../board/board.css';
 import "./auth.css";
 import { Button } from 'react-bootstrap';
@@ -104,7 +100,7 @@ class Firebase extends Component {
         </div>
         <div className="table">
         
-         <p>Please refresh the page if you can't see your username on the board</p>
+         <h3><i>Please refresh the page if you can't see your username at the end of the board</i></h3>
          
          <Table striped bordered hover variant="dark">
           <thead>

@@ -403,7 +403,7 @@ class Square extends React.Component {
           </div>
           <div className="game-info">
             <h1 className="depth">Depth </h1>
-            <p className="depth">If against Ai</p>
+            <h3 className="depth">If against Ai</h3>
           <ButtonGroup className="mr-2" aria-label="First group">
           <Button variant="outline-light" className="level" onClick={()=>level=1}>1</Button>
           <Button variant="outline-light" className="level" onClick={()=>level=2}>2</Button>          

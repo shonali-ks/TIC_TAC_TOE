@@ -22,26 +22,26 @@ ol, ul {
 }
 
 .square {
-  background: #fff;
-    border: 1px solid #999;
-    float: left;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 34px;
-    height: 80px;
-    margin-right: 1%;
-    margin-top: 3px;
-    padding: 0;
-    text-align: center;
-    width: 80px;
-    color: #000;
-    border-radius: 20px;
-    
+  background:  rgba(0,0,0,0.4);
+  border: 7px solid var(--white);
+  float: left;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 34px;
+  height: 80px;
+  margin-right: 1%;
+  margin-top: 3px;
+  padding: 0;
+  text-align: center;
+  width: 80px;
+  color: #FFF;
+  border-radius: 20px;
 }
+
 @media (max-width: 575px) {
   .square {
-    background: #fff;
-    border: 1px solid #999;
+    background: rgba(0,0,0,0.4);
+    border: 7px solid var(--white);
     float: left;
     font-size: 24px;
     font-weight: 100;
@@ -52,7 +52,7 @@ ol, ul {
     padding: 0;
     text-align: center;
     width: 40px;
-    color: #000;
+    color: #FFF;
     border-radius: 10px;
       
   }
