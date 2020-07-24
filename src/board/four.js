@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import nexthuman from '../utils/humanvshuman';
 import {checkwinnerFour} from '../utils/winner';
 import findBestMove from '../utils/minmax';
