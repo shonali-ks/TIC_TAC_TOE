@@ -100,7 +100,7 @@ class Firebase extends Component {
         </div>
         <div className="table">
         
-         <h3><i>Please refresh the page if you can't see your username at the end of the board</i></h3>
+         <h4><i>Scroll down the leaderboard to find your name. Refresh the page if you still don't.</i></h4>
          
          <Table striped bordered hover variant="dark">
           <thead>

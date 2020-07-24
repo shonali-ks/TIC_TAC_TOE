@@ -61,14 +61,14 @@ var level=-1;
 var minimax = false;
 var alphaBeta = false;
 var algo = 1;
-
+var Uid=1
 //Make squares
 class Square extends React.Component {
     
     render() {
       return (
         
-        <Button variant="outline-light" className="square" onClick={()=>this.props.onClick()} >
+        <Button variant="outline-light" className="square"  onClick={()=>{this.props.onClick();Uid++;}} >
           {this.props.value}
         </Button>
        
