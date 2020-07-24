@@ -14,8 +14,9 @@ Team Name: GSS Mars Rover
  
 
 
- is ready to be deployed!
-For demo:https://tic-tac-toe123.herokuapp.com/
+It is ready to be deployed!!
+
+Demo: https://tic-tac-toe123.herokuapp.com/
 
 # How to run on local machine
 
