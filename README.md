@@ -8,7 +8,7 @@ Team Name: GSS Mars Rover
 
 | Member name|Email Id| 
 | :------------: |:---------------:| 
-| K S Shonali      |shonaliks.181it244@nitk.edu.in  |
+| Shonali K S     |shonaliks.181it244@nitk.edu.in  |
 | Shreeya Sanjay Sand|shreeyajain12@gmail.com|    
 | Gayathri Gutla |      gayathrihogwarts@gmail.com  |  
  
